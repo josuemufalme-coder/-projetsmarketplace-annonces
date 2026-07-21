@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Erreur technique" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Erreur technique" %}</h1>
+  <p>{% translate "Une erreur est survenue de notre côté. Réessayez dans quelques instants." %}</p>
+  <p style="margin-top:1rem;"><a class="btn btn-vert" href="/">{% translate "Retour à l'accueil" %}</a></p>
+</div>
+{% endblock %}

@@ -19,12 +19,8 @@ msgid "Votre numéro de téléphone"
 msgstr "Numero ya telefone na yo"
 
 #: annonces/forms.py:41
-#, fuzzy
-#| msgid ""
-#| "Affiché sur vos annonces uniquement si vous choisissez le mode « numéro "
-#| "affiché »."
 msgid "Obligatoire si vous choisissez « Numéro affiché sur l'annonce »."
-msgstr "Ekomonana na ba annonces na yo kaka soki oponi « kolakisa numero »."
+msgstr "Esengeli soki oponi « numero emonana na annonce »."
 
 #: annonces/forms.py:43
 msgid "Photos"
@@ -82,22 +78,18 @@ msgid "Annonce retirée."
 msgstr "Annonce elongolami."
 
 #: avis/forms.py:11
-#, fuzzy
-#| msgid "Votre numéro de téléphone"
 msgid "Votre note"
-msgstr "Numero ya telefone na yo"
+msgstr "Note na yo"
 
 #: avis/forms.py:11
 msgid "Votre commentaire"
 msgstr "Maloba na yo"
 
 #: avis/views.py:22
-#, fuzzy
-#| msgid "Connectez-vous pour voir le numéro du vendeur."
 msgid ""
 "Vous devez d'abord contacter ce vendeur (numéro ou message) pour laisser un "
 "avis."
-msgstr "Kota na konti mpo na komona numero ya motekisi."
+msgstr "Esengeli liboso obenga to okomela motekisi oyo mpo na kotia avis."
 
 #: avis/views.py:32
 msgid "Merci pour votre avis !"
@@ -178,10 +170,8 @@ msgid "Merci, votre signalement sera examiné par notre équipe."
 msgstr "Matondo, equipe na biso ekotala signalement na yo."
 
 #: moderation/views.py:31
-#, fuzzy
-#| msgid "Choisissez une note de 1 à 5 étoiles."
 msgid "Choisissez un motif de signalement."
-msgstr "Pona note kobanda na 1 kino na 5 minzoto."
+msgstr "Pona ntina ya signalement."
 
 #: templates/429.html:4 templates/429.html:8
 msgid "Trop de tentatives"
@@ -239,10 +229,8 @@ msgid "Envoyer"
 msgstr "Kotinda"
 
 #: templates/annonces/detail.html:86
-#, fuzzy
-#| msgid "Connectez-vous pour voir le numéro du vendeur."
 msgid "Connectez-vous pour contacter ce vendeur par la messagerie interne."
-msgstr "Kota na konti mpo na komona numero ya motekisi."
+msgstr "Kota na konti mpo na kotinda message na motekisi oyo."
 
 #: templates/annonces/detail.html:87 templates/base.html:26
 #: templates/comptes/connexion.html:4 templates/comptes/connexion.html:8
@@ -256,17 +244,13 @@ msgstr "Kobongisa ba annonces na ngai"
 
 #: templates/annonces/detail.html:97 templates/moderation/signaler.html:4
 #: templates/moderation/signaler.html:8
-#, fuzzy
-#| msgid "Publier une annonce"
 msgid "Signaler cette annonce"
-msgstr "Kotia annonce"
+msgstr "Kofunda annonce oyo"
 
 #: templates/annonces/indisponible.html:4
 #: templates/annonces/indisponible.html:8
-#, fuzzy
-#| msgid "Bientôt disponible"
 msgid "Annonce indisponible"
-msgstr "Ekomonana kala mingi te"
+msgstr "Annonce ezali te"
 
 #: templates/annonces/indisponible.html:9
 msgid "Cette annonce a été retirée, a expiré ou n'existe pas."
@@ -519,10 +503,8 @@ msgstr ""
 " passe ya sika."
 
 #: templates/comptes/mdp_oublie.html:15
-#, fuzzy
-#| msgid "Envoyer le signalement"
 msgid "Envoyer le lien"
-msgstr "Kotinda signalement"
+msgstr "Kotinda lien"
 
 #: templates/comptes/mdp_sujet.txt:1
 msgid "Kongo Market — réinitialisation de votre mot de passe"
@@ -546,10 +528,9 @@ msgid "Enregistrer"
 msgstr "Bomba"
 
 #: templates/comptes/vendeur.html:11
-#, fuzzy, python-format
-#| msgid "publiée le %(date)s"
+#, python-format
 msgid "membre depuis %(date)s"
-msgstr "ebimaki mokolo ya %(date)s"
+msgstr "azali membre banda %(date)s"
 
 #: templates/comptes/vendeur.html:17
 #, python-format
@@ -559,16 +540,12 @@ msgstr[0] "avis %(total)s"
 msgstr[1] "ba avis %(total)s"
 
 #: templates/comptes/vendeur.html:20
-#, fuzzy
-#| msgid "Pas encore de compte ?"
 msgid "Pas encore d'avis."
-msgstr "Ozali na konti te ?"
+msgstr "Avis ezali naino te."
 
 #: templates/comptes/vendeur.html:24
-#, fuzzy
-#| msgid "Annonces récentes"
 msgid "Annonces en ligne"
-msgstr "Ba annonces ya sika"
+msgstr "Ba annonces oyo ezali"
 
 #: templates/comptes/vendeur.html:30
 msgid "Aucune annonce en ligne actuellement."
@@ -587,10 +564,8 @@ msgid "Laisser un avis"
 msgstr "Kotia avis"
 
 #: templates/comptes/vendeur.html:39
-#, fuzzy
-#| msgid "Publier une annonce"
 msgid "Publier mon avis"
-msgstr "Kotia annonce"
+msgstr "Kotinda avis na ngai"
 
 #: templates/comptes/vendeur.html:43
 msgid ""
@@ -603,10 +578,8 @@ msgid "Ce vendeur n'a pas encore reçu d'avis."
 msgstr "Motekisi oyo azwi naino avis te."
 
 #: templates/core/home.html:8
-#, fuzzy
-#| msgid "Petites annonces à Kinshasa"
 msgid "Achetez et vendez à Kinshasa"
-msgstr "Koteka mpe kosomba na Kinshasa"
+msgstr "Somba mpe teka na Kinshasa"
 
 #: templates/core/home.html:10
 msgid "Que cherchez-vous ?"
@@ -645,10 +618,8 @@ msgid "avec"
 msgstr "na"
 
 #: templates/messagerie/conversation.html:27
-#, fuzzy
-#| msgid "Votre numéro de téléphone"
 msgid "Votre réponse"
-msgstr "Numero ya telefone na yo"
+msgstr "Eyano na yo"
 
 #: templates/moderation/signaler.html:15
 msgid "Motif"

@@ -17,12 +17,8 @@ msgid "Votre numéro de téléphone"
 msgstr "Your phone number"
 
 #: annonces/forms.py:41
-#, fuzzy
-#| msgid ""
-#| "Affiché sur vos annonces uniquement si vous choisissez le mode « numéro "
-#| "affiché »."
 msgid "Obligatoire si vous choisissez « Numéro affiché sur l'annonce »."
-msgstr "Shown on your ads only if you choose the “displayed number” mode."
+msgstr "Required if you choose “Phone number shown on the ad”."
 
 #: annonces/forms.py:43
 msgid "Photos"
@@ -80,22 +76,20 @@ msgid "Annonce retirée."
 msgstr "Ad removed."
 
 #: avis/forms.py:11
-#, fuzzy
-#| msgid "Votre numéro de téléphone"
 msgid "Votre note"
-msgstr "Your phone number"
+msgstr "Your rating"
 
 #: avis/forms.py:11
 msgid "Votre commentaire"
 msgstr "Your comment"
 
 #: avis/views.py:22
-#, fuzzy
-#| msgid "Connectez-vous pour voir le numéro du vendeur."
 msgid ""
 "Vous devez d'abord contacter ce vendeur (numéro ou message) pour laisser un "
 "avis."
-msgstr "Log in to see the seller's phone number."
+msgstr ""
+"You must first contact this seller (phone or message) before leaving a "
+"review."
 
 #: avis/views.py:32
 msgid "Merci pour votre avis !"
@@ -176,10 +170,8 @@ msgid "Merci, votre signalement sera examiné par notre équipe."
 msgstr "Thank you, your report will be reviewed by our team."
 
 #: moderation/views.py:31
-#, fuzzy
-#| msgid "Choisissez une note de 1 à 5 étoiles."
 msgid "Choisissez un motif de signalement."
-msgstr "Choose a rating from 1 to 5 stars."
+msgstr "Choose a reason for the report."
 
 #: templates/429.html:4 templates/429.html:8
 msgid "Trop de tentatives"
@@ -239,10 +231,8 @@ msgid "Envoyer"
 msgstr "Send"
 
 #: templates/annonces/detail.html:86
-#, fuzzy
-#| msgid "Connectez-vous pour voir le numéro du vendeur."
 msgid "Connectez-vous pour contacter ce vendeur par la messagerie interne."
-msgstr "Log in to see the seller's phone number."
+msgstr "Log in to contact this seller through internal messaging."
 
 #: templates/annonces/detail.html:87 templates/base.html:26
 #: templates/comptes/connexion.html:4 templates/comptes/connexion.html:8
@@ -256,17 +246,13 @@ msgstr "Manage my ads"
 
 #: templates/annonces/detail.html:97 templates/moderation/signaler.html:4
 #: templates/moderation/signaler.html:8
-#, fuzzy
-#| msgid "Publier une annonce"
 msgid "Signaler cette annonce"
-msgstr "Post an ad"
+msgstr "Report this ad"
 
 #: templates/annonces/indisponible.html:4
 #: templates/annonces/indisponible.html:8
-#, fuzzy
-#| msgid "Bientôt disponible"
 msgid "Annonce indisponible"
-msgstr "Coming soon"
+msgstr "Ad unavailable"
 
 #: templates/annonces/indisponible.html:9
 msgid "Cette annonce a été retirée, a expiré ou n'existe pas."
@@ -517,10 +503,8 @@ msgstr ""
 "password."
 
 #: templates/comptes/mdp_oublie.html:15
-#, fuzzy
-#| msgid "Envoyer le signalement"
 msgid "Envoyer le lien"
-msgstr "Send report"
+msgstr "Send the link"
 
 #: templates/comptes/mdp_sujet.txt:1
 msgid "Kongo Market — réinitialisation de votre mot de passe"
@@ -544,10 +528,9 @@ msgid "Enregistrer"
 msgstr "Save"
 
 #: templates/comptes/vendeur.html:11
-#, fuzzy, python-format
-#| msgid "publiée le %(date)s"
+#, python-format
 msgid "membre depuis %(date)s"
-msgstr "posted on %(date)s"
+msgstr "member since %(date)s"
 
 #: templates/comptes/vendeur.html:17
 #, python-format
@@ -557,16 +540,12 @@ msgstr[0] "%(total)s review"
 msgstr[1] "%(total)s reviews"
 
 #: templates/comptes/vendeur.html:20
-#, fuzzy
-#| msgid "Pas encore de compte ?"
 msgid "Pas encore d'avis."
-msgstr "No account yet?"
+msgstr "No reviews yet."
 
 #: templates/comptes/vendeur.html:24
-#, fuzzy
-#| msgid "Annonces récentes"
 msgid "Annonces en ligne"
-msgstr "Recent ads"
+msgstr "Ads online"
 
 #: templates/comptes/vendeur.html:30
 msgid "Aucune annonce en ligne actuellement."
@@ -585,10 +564,8 @@ msgid "Laisser un avis"
 msgstr "Leave a review"
 
 #: templates/comptes/vendeur.html:39
-#, fuzzy
-#| msgid "Publier une annonce"
 msgid "Publier mon avis"
-msgstr "Post an ad"
+msgstr "Post my review"
 
 #: templates/comptes/vendeur.html:43
 msgid ""
@@ -603,10 +580,8 @@ msgid "Ce vendeur n'a pas encore reçu d'avis."
 msgstr "This seller has not received any reviews yet."
 
 #: templates/core/home.html:8
-#, fuzzy
-#| msgid "Petites annonces à Kinshasa"
 msgid "Achetez et vendez à Kinshasa"
-msgstr "Classified ads in Kinshasa"
+msgstr "Buy and sell in Kinshasa"
 
 #: templates/core/home.html:10
 msgid "Que cherchez-vous ?"
@@ -645,10 +620,8 @@ msgid "avec"
 msgstr "with"
 
 #: templates/messagerie/conversation.html:27
-#, fuzzy
-#| msgid "Votre numéro de téléphone"
 msgid "Votre réponse"
-msgstr "Your phone number"
+msgstr "Your reply"
 
 #: templates/moderation/signaler.html:15
 msgid "Motif"

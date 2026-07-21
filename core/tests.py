@@ -110,3 +110,46 @@ class LimitationDebitTests(TestCase):
         reponse = self.client.post(url, donnees)
         self.assertEqual(reponse.status_code, 429)
         self.assertFalse(Utilisateur.objects.filter(email="b@example.com").exists())
+
+
+class FinitionsTests(TestCase):
+    """Étape 10 : robots.txt, sitemap, pages d'erreur, favicon."""
+
+    def test_robots_txt(self):
+        reponse = self.client.get("/robots.txt")
+        self.assertEqual(reponse.status_code, 200)
+        contenu = reponse.content.decode()
+        self.assertIn("Disallow: /admin/", contenu)
+        self.assertIn("Sitemap:", contenu)
+
+    def test_sitemap_contient_les_annonces_actives(self):
+        vendeur = Utilisateur.objects.create_user(
+            email="v2@example.com", password="kin2026!solide", nom_affichage="V2"
+        )
+        annonce = Annonce.objects.create(
+            vendeur=vendeur,
+            categorie=Categorie.objects.get(slug="autres"),
+            commune=Commune.objects.get(slug="lemba"),
+            titre="Pour le sitemap",
+            slug="pour-le-sitemap",
+            description="Desc.",
+            prix_a_discuter=True,
+            date_publication=timezone.now(),
+        )
+        reponse = self.client.get("/sitemap.xml")
+        self.assertEqual(reponse.status_code, 200)
+        self.assertIn(annonce.get_absolute_url(), reponse.content.decode())
+
+    def test_page_404_personnalisee(self):
+        reponse = self.client.get("/cette-page-n-existe-pas/")
+        self.assertEqual(reponse.status_code, 404)
+        self.assertContains(reponse, "Page introuvable", status_code=404)
+
+    def test_favicon_reference(self):
+        reponse = self.client.get(reverse("core:home"))
+        self.assertContains(reponse, "favicon.svg")
+
+    def test_open_graph_sur_l_accueil(self):
+        reponse = self.client.get(reverse("core:home"))
+        self.assertContains(reponse, 'property="og:site_name"')
+        self.assertContains(reponse, 'property="og:title"')

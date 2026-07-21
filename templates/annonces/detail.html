@@ -3,10 +3,10 @@
 
 {% block title %}{{ annonce.titre }} — Kongo Market{% endblock %}
 
-{% block head %}
+{% block og %}
 <meta property="og:title" content="{{ annonce.titre }}">
 <meta property="og:description" content="{{ annonce.description|truncatechars:150 }}">
-{% with photo=annonce.photos.all|first %}{% if photo %}<meta property="og:image" content="{{ photo.image.url }}">{% endif %}{% endwith %}
+{% with photo=annonce.photos.all|first %}{% if photo %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ photo.image.url }}">{% endif %}{% endwith %}
 {% endblock %}
 
 {% block content %}

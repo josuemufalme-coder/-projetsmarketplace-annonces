@@ -202,3 +202,14 @@ form ul { list-style-position: inside; font-size: 0.85rem; color: var(--gris); }
 .note-vendeur { font-weight: 600; margin-top: 0.4rem; }
 
 .lien-discret { color: var(--gris); font-size: 0.85rem; }
+
+/* Ajustements petits écrans */
+@media (max-width: 480px) {
+  .heros h1 { font-size: 1.3rem; }
+  .galerie img { height: 11rem; }
+  .contenu { padding: 1rem 0.8rem; }
+  .carte { padding: 1rem; }
+  .nav { gap: 0.6rem; font-size: 0.92rem; }
+  .filtre-prix { grid-template-columns: 1fr; }
+  .ligne-annonce, .ligne-conversation { flex-direction: column; align-items: flex-start; }
+}
