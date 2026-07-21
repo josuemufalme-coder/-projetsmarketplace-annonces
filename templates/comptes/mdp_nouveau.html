@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Nouveau mot de passe" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Nouveau mot de passe" %}</h1>
+  {% if validlink %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-vert">{% translate "Changer mon mot de passe" %}</button>
+  </form>
+  {% else %}
+  <p class="message error">{% translate "Ce lien de réinitialisation n'est plus valable. Demandez-en un nouveau." %}</p>
+  <p><a href="{% url 'comptes:mdp_oublie' %}">{% translate "Mot de passe oublié" %}</a></p>
+  {% endif %}
+</div>
+{% endblock %}

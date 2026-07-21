@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Mot de passe changé" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Mot de passe changé" %}</h1>
+  <p>{% translate "Votre mot de passe a bien été changé. Vous pouvez maintenant vous connecter." %}</p>
+  <p style="margin-top:1rem;"><a class="btn btn-vert" href="{% url 'comptes:connexion' %}">{% translate "Connexion" %}</a></p>
+</div>
+{% endblock %}

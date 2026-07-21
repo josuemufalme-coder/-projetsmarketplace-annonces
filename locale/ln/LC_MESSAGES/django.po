@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 12:58+0100\n"
+"POT-Creation-Date: 2026-07-21 13:04+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: ln\n"
@@ -236,7 +236,7 @@ msgstr "Kota na konti mpo na komona numero ya motekisi."
 
 #: templates/annonces/detail.html:87 templates/base.html:26
 #: templates/comptes/connexion.html:4 templates/comptes/connexion.html:8
-#: templates/comptes/inscription.html:18
+#: templates/comptes/inscription.html:18 templates/comptes/mdp_termine.html:10
 msgid "Connexion"
 msgstr "Kokota"
 
@@ -404,7 +404,7 @@ msgstr "Ba messages"
 msgid "Déconnexion"
 msgstr "Kobima"
 
-#: templates/base.html:27 templates/comptes/connexion.html:18
+#: templates/base.html:27 templates/comptes/connexion.html:21
 #: templates/comptes/inscription.html:4 templates/comptes/inscription.html:8
 msgid "Créer un compte"
 msgstr "Fungola konti"
@@ -422,6 +422,10 @@ msgid "Se connecter"
 msgstr "Kokota"
 
 #: templates/comptes/connexion.html:18
+msgid "Mot de passe oublié ?"
+msgstr "Obosani mot de passe ?"
+
+#: templates/comptes/connexion.html:21
 msgid "Pas encore de compte ?"
 msgstr "Ozali na konti te ?"
 
@@ -440,6 +444,88 @@ msgstr "Fungola konti na ngai"
 #: templates/comptes/inscription.html:18
 msgid "Déjà un compte ?"
 msgstr "Ozali na konti ?"
+
+#: templates/comptes/mdp_email.txt:1
+msgid ""
+"Bonjour,\n"
+"\n"
+"Vous avez demandé à réinitialiser le mot de passe de votre compte Kongo Market.\n"
+"\n"
+"Choisissez un nouveau mot de passe en ouvrant ce lien :"
+msgstr ""
+"Mbote,\n"
+"\n"
+"Osengaki kobongola mot de passe ya konti na yo ya Kongo Market.\n"
+"\n"
+"Pona mot de passe ya sika na kofungola lien oyo :"
+
+#: templates/comptes/mdp_email.txt:9
+msgid ""
+"Si vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail : votre mot de passe reste inchangé.\n"
+"\n"
+"L'équipe Kongo Market"
+msgstr ""
+"Soki yo te nde osengaki yango, tika e-mail oyo boye : mot de passe na yo ebongwani te.\n"
+"\n"
+"Equipe ya Kongo Market"
+
+#: templates/comptes/mdp_envoye.html:4 templates/comptes/mdp_envoye.html:8
+msgid "E-mail envoyé"
+msgstr "E-mail etindami"
+
+#: templates/comptes/mdp_envoye.html:9
+msgid ""
+"Si un compte existe avec cette adresse, vous recevrez un e-mail avec le lien"
+" de réinitialisation dans quelques minutes. Pensez à vérifier le dossier "
+"spam."
+msgstr ""
+"Soki konti ezali na adresse oyo, okozwa e-mail na lien na mwa minuti. "
+"Kobosana te kotala dossier spam."
+
+#: templates/comptes/mdp_nouveau.html:4 templates/comptes/mdp_nouveau.html:8
+msgid "Nouveau mot de passe"
+msgstr "Mot de passe ya sika"
+
+#: templates/comptes/mdp_nouveau.html:13
+msgid "Changer mon mot de passe"
+msgstr "Kobongola mot de passe na ngai"
+
+#: templates/comptes/mdp_nouveau.html:16
+msgid ""
+"Ce lien de réinitialisation n'est plus valable. Demandez-en un nouveau."
+msgstr "Lien oyo esili tango. Senga oyo ya sika."
+
+#: templates/comptes/mdp_nouveau.html:17 templates/comptes/mdp_oublie.html:4
+#: templates/comptes/mdp_oublie.html:8
+msgid "Mot de passe oublié"
+msgstr "Mot de passe ebosanami"
+
+#: templates/comptes/mdp_oublie.html:10
+msgid ""
+"Indiquez l'adresse e-mail de votre compte : nous vous enverrons un lien pour"
+" choisir un nouveau mot de passe."
+msgstr ""
+"Tia adresse e-mail ya konti na yo : tokotindela yo lien mpo na kopona mot de"
+" passe ya sika."
+
+#: templates/comptes/mdp_oublie.html:15
+#, fuzzy
+#| msgid "Envoyer le signalement"
+msgid "Envoyer le lien"
+msgstr "Kotinda signalement"
+
+#: templates/comptes/mdp_sujet.txt:1
+msgid "Kongo Market — réinitialisation de votre mot de passe"
+msgstr "Kongo Market — kobongola mot de passe na yo"
+
+#: templates/comptes/mdp_termine.html:4 templates/comptes/mdp_termine.html:8
+msgid "Mot de passe changé"
+msgstr "Mot de passe ebongwani"
+
+#: templates/comptes/mdp_termine.html:9
+msgid ""
+"Votre mot de passe a bien été changé. Vous pouvez maintenant vous connecter."
+msgstr "Mot de passe na yo ebongwani malamu. Okoki sikoyo kokota."
 
 #: templates/comptes/profil.html:4 templates/comptes/profil.html:8
 msgid "Mon profil"

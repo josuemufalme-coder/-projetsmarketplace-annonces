@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 12:58+0100\n"
+"POT-Creation-Date: 2026-07-21 13:04+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: en\n"
@@ -234,7 +234,7 @@ msgstr "Log in to see the seller's phone number."
 
 #: templates/annonces/detail.html:87 templates/base.html:26
 #: templates/comptes/connexion.html:4 templates/comptes/connexion.html:8
-#: templates/comptes/inscription.html:18
+#: templates/comptes/inscription.html:18 templates/comptes/mdp_termine.html:10
 msgid "Connexion"
 msgstr "Log in"
 
@@ -401,7 +401,7 @@ msgstr "Messages"
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:27 templates/comptes/connexion.html:18
+#: templates/base.html:27 templates/comptes/connexion.html:21
 #: templates/comptes/inscription.html:4 templates/comptes/inscription.html:8
 msgid "Créer un compte"
 msgstr "Create an account"
@@ -419,6 +419,10 @@ msgid "Se connecter"
 msgstr "Log in"
 
 #: templates/comptes/connexion.html:18
+msgid "Mot de passe oublié ?"
+msgstr "Forgot your password?"
+
+#: templates/comptes/connexion.html:21
 msgid "Pas encore de compte ?"
 msgstr "No account yet?"
 
@@ -436,6 +440,88 @@ msgstr "Create my account"
 #: templates/comptes/inscription.html:18
 msgid "Déjà un compte ?"
 msgstr "Already have an account?"
+
+#: templates/comptes/mdp_email.txt:1
+msgid ""
+"Bonjour,\n"
+"\n"
+"Vous avez demandé à réinitialiser le mot de passe de votre compte Kongo Market.\n"
+"\n"
+"Choisissez un nouveau mot de passe en ouvrant ce lien :"
+msgstr ""
+"Hello,\n"
+"\n"
+"You asked to reset the password of your Kongo Market account.\n"
+"\n"
+"Choose a new password by opening this link:"
+
+#: templates/comptes/mdp_email.txt:9
+msgid ""
+"Si vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail : votre mot de passe reste inchangé.\n"
+"\n"
+"L'équipe Kongo Market"
+msgstr ""
+"If you did not make this request, simply ignore this email: your password remains unchanged.\n"
+"\n"
+"The Kongo Market team"
+
+#: templates/comptes/mdp_envoye.html:4 templates/comptes/mdp_envoye.html:8
+msgid "E-mail envoyé"
+msgstr "Email sent"
+
+#: templates/comptes/mdp_envoye.html:9
+msgid ""
+"Si un compte existe avec cette adresse, vous recevrez un e-mail avec le lien"
+" de réinitialisation dans quelques minutes. Pensez à vérifier le dossier "
+"spam."
+msgstr ""
+"If an account exists with this address, you will receive an email with the "
+"reset link within a few minutes. Remember to check your spam folder."
+
+#: templates/comptes/mdp_nouveau.html:4 templates/comptes/mdp_nouveau.html:8
+msgid "Nouveau mot de passe"
+msgstr "New password"
+
+#: templates/comptes/mdp_nouveau.html:13
+msgid "Changer mon mot de passe"
+msgstr "Change my password"
+
+#: templates/comptes/mdp_nouveau.html:16
+msgid ""
+"Ce lien de réinitialisation n'est plus valable. Demandez-en un nouveau."
+msgstr "This reset link is no longer valid. Request a new one."
+
+#: templates/comptes/mdp_nouveau.html:17 templates/comptes/mdp_oublie.html:4
+#: templates/comptes/mdp_oublie.html:8
+msgid "Mot de passe oublié"
+msgstr "Forgot password"
+
+#: templates/comptes/mdp_oublie.html:10
+msgid ""
+"Indiquez l'adresse e-mail de votre compte : nous vous enverrons un lien pour"
+" choisir un nouveau mot de passe."
+msgstr ""
+"Enter your account email address: we will send you a link to choose a new "
+"password."
+
+#: templates/comptes/mdp_oublie.html:15
+#, fuzzy
+#| msgid "Envoyer le signalement"
+msgid "Envoyer le lien"
+msgstr "Send report"
+
+#: templates/comptes/mdp_sujet.txt:1
+msgid "Kongo Market — réinitialisation de votre mot de passe"
+msgstr "Kongo Market — reset your password"
+
+#: templates/comptes/mdp_termine.html:4 templates/comptes/mdp_termine.html:8
+msgid "Mot de passe changé"
+msgstr "Password changed"
+
+#: templates/comptes/mdp_termine.html:9
+msgid ""
+"Votre mot de passe a bien été changé. Vous pouvez maintenant vous connecter."
+msgstr "Your password has been changed. You can now log in."
 
 #: templates/comptes/profil.html:4 templates/comptes/profil.html:8
 msgid "Mon profil"

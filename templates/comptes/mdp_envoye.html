@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "E-mail envoyé" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "E-mail envoyé" %}</h1>
+  <p>{% translate "Si un compte existe avec cette adresse, vous recevrez un e-mail avec le lien de réinitialisation dans quelques minutes. Pensez à vérifier le dossier spam." %}</p>
+</div>
+{% endblock %}

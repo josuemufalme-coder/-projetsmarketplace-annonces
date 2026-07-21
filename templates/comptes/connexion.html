@@ -15,6 +15,9 @@
     <button type="submit" class="btn btn-vert">{% translate "Se connecter" %}</button>
   </form>
   <p style="margin-top:1rem;">
+    <a href="{% url 'comptes:mdp_oublie' %}">{% translate "Mot de passe oublié ?" %}</a>
+  </p>
+  <p>
     {% translate "Pas encore de compte ?" %} <a href="{% url 'comptes:inscription' %}">{% translate "Créer un compte" %}</a>
   </p>
 </div>

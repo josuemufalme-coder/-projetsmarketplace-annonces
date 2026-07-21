@@ -1,0 +1,11 @@
+{% load i18n %}{% blocktranslate %}Bonjour,
+
+Vous avez demandé à réinitialiser le mot de passe de votre compte Kongo Market.
+
+Choisissez un nouveau mot de passe en ouvrant ce lien :{% endblocktranslate %}
+
+{{ protocol }}://{{ domain }}{% url 'comptes:mdp_nouveau' uidb64=uid token=token %}
+
+{% blocktranslate %}Si vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail : votre mot de passe reste inchangé.
+
+L'équipe Kongo Market{% endblocktranslate %}

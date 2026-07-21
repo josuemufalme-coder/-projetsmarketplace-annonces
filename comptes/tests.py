@@ -60,3 +60,56 @@ class ComptesTests(TestCase):
         utilisateur = Utilisateur.objects.get(email="amina@example.com")
         self.assertEqual(utilisateur.nom_affichage, "Amina K.")
         self.assertEqual(utilisateur.commune, lemba)
+
+
+import re
+
+from django.core import mail
+
+
+class MotDePasseOublieTests(TestCase):
+    def setUp(self):
+        self.utilisateur = Utilisateur.objects.create_user(
+            email="amina@example.com", password="ancien-mdp-2026", nom_affichage="Amina"
+        )
+
+    def test_lien_visible_sur_la_page_de_connexion(self):
+        reponse = self.client.get(reverse("comptes:connexion"))
+        self.assertContains(reponse, "Mot de passe oublié")
+
+    def test_demande_envoie_un_email_avec_lien(self):
+        reponse = self.client.post(
+            reverse("comptes:mdp_oublie"), {"email": "amina@example.com"}
+        )
+        self.assertRedirects(reponse, reverse("comptes:mdp_envoye"))
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn("réinitialisation", mail.outbox[0].subject)
+        self.assertIn("/compte/mdp-nouveau/", mail.outbox[0].body)
+
+    def test_email_inconnu_ne_revele_rien(self):
+        """Même réponse pour une adresse inconnue (pas de fuite d'existence de compte)."""
+        reponse = self.client.post(
+            reverse("comptes:mdp_oublie"), {"email": "inconnu@example.com"}
+        )
+        self.assertRedirects(reponse, reverse("comptes:mdp_envoye"))
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_cycle_complet_de_reinitialisation(self):
+        self.client.post(reverse("comptes:mdp_oublie"), {"email": "amina@example.com"})
+        lien = re.search(r"(/compte/mdp-nouveau/[^\s]+)", mail.outbox[0].body).group(1)
+        # Django redirige le lien du jeton vers une URL de session.
+        reponse = self.client.get(lien, follow=True)
+        self.assertEqual(reponse.status_code, 200)
+        url_formulaire = reponse.request["PATH_INFO"]
+        reponse = self.client.post(
+            url_formulaire,
+            {"new_password1": "nouveau-mdp-2026!", "new_password2": "nouveau-mdp-2026!"},
+        )
+        self.assertRedirects(reponse, reverse("comptes:mdp_termine"))
+        self.assertTrue(
+            self.client.login(username="amina@example.com", password="nouveau-mdp-2026!")
+        )
+
+    def test_lien_invalide_affiche_une_erreur(self):
+        reponse = self.client.get("/compte/mdp-nouveau/abc/def-ghi/")
+        self.assertContains(reponse, "n'est plus valable")
