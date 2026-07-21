@@ -45,7 +45,13 @@ INSTALLED_APPS = [
     "core",
     "geo",
     "annonces",
+    "comptes",
 ]
+
+AUTH_USER_MODEL = "comptes.Utilisateur"
+LOGIN_URL = "comptes:connexion"
+LOGIN_REDIRECT_URL = "core:home"
+LOGOUT_REDIRECT_URL = "core:home"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -127,9 +133,21 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# Le stockage avec manifeste exige un collectstatic préalable : on ne
+# l'active qu'en vraie production (ni debug, ni tests).
+import sys  # noqa: E402
+
+_EN_TEST = "test" in sys.argv
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+    "staticfiles": {
+        "BACKEND": (
+            "whitenoise.storage.CompressedManifestStaticFilesStorage"
+            if not DEBUG and not _EN_TEST
+            else "django.contrib.staticfiles.storage.StaticFilesStorage"
+        )
+    },
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

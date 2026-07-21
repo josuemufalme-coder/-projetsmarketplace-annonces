@@ -5,60 +5,50 @@
 
 {% block head %}
 <style>
-  :root { color-scheme: light; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  body { background: #0b3d2e; color: #fdfdfb; }
+  .accueil {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #0b3d2e;
-    color: #fdfdfb;
     padding: 1.5rem;
   }
-  .card { max-width: 34rem; text-align: center; }
-  .logo {
+  .accueil-carte { max-width: 34rem; text-align: center; }
+  .accueil-logo {
     font-size: 2.4rem;
     font-weight: 800;
     letter-spacing: -0.02em;
     margin-bottom: 0.75rem;
   }
-  .logo .accent { color: #f5c518; }
-  h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: 1rem; }
-  p { line-height: 1.6; color: #d9e5df; margin-bottom: 2rem; }
-  .langs { display: flex; gap: 0.5rem; justify-content: center; }
-  .langs button {
-    background: transparent;
-    border: 1px solid #4d7a68;
-    color: #fdfdfb;
-    border-radius: 999px;
-    padding: 0.45rem 1.1rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-  }
-  .langs button.active { background: #f5c518; border-color: #f5c518; color: #0b3d2e; font-weight: 700; }
+  .accueil-logo .accent { color: #f5c518; }
+  .accueil h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: 1rem; }
+  .accueil p { line-height: 1.6; color: #d9e5df; margin-bottom: 2rem; }
+  .accueil .langs { display: flex; gap: 0.5rem; justify-content: center; }
+  .accueil .puce-langue { border-color: #4d7a68; color: #fdfdfb; }
+  .accueil .puce-langue.active { background: #f5c518; border-color: #f5c518; color: #0b3d2e; }
 </style>
 {% endblock %}
 
-{% block content %}
-<main class="card">
-  <div class="logo">Kongo<span class="accent">Market</span></div>
-  <h1>{% translate "Bientôt disponible" %}</h1>
-  <p>
-    {% translate "La plateforme de petites annonces de Kinshasa : immobilier, véhicules, téléphones, emploi, services et plus — gratuite pour tous." %}
-  </p>
-  <div class="langs">
-    {% get_current_language as CURRENT_LANG %}
-    {% for code, name in LANGUAGES %}
-    <form action="{% url 'set_language' %}" method="post">
-      {% csrf_token %}
-      <input type="hidden" name="language" value="{{ code }}">
-      <button type="submit" class="{% if code == CURRENT_LANG %}active{% endif %}" lang="{{ code }}">
-        {{ code|upper }}
-      </button>
-    </form>
-    {% endfor %}
-  </div>
-</main>
+{% block body %}
+<div class="accueil">
+  <main class="accueil-carte">
+    <div class="accueil-logo">Kongo<span class="accent">Market</span></div>
+    <h1>{% translate "Bientôt disponible" %}</h1>
+    <p>
+      {% translate "La plateforme de petites annonces de Kinshasa : immobilier, véhicules, téléphones, emploi, services et plus — gratuite pour tous." %}
+    </p>
+    <div class="langs">
+      {% get_current_language as CURRENT_LANG %}
+      {% for code, name in LANGUAGES %}
+      <form action="{% url 'set_language' %}" method="post" class="inline">
+        {% csrf_token %}
+        <input type="hidden" name="language" value="{{ code }}">
+        <button type="submit" class="puce-langue {% if code == CURRENT_LANG %}active{% endif %}" lang="{{ code }}">
+          {{ code|upper }}
+        </button>
+      </form>
+      {% endfor %}
+    </div>
+  </main>
+</div>
 {% endblock %}

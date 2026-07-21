@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Connexion" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Connexion" %}</h1>
+  {% if form.non_field_errors %}
+  <p class="message error">{% translate "Adresse e-mail ou mot de passe incorrect." %}</p>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-vert">{% translate "Se connecter" %}</button>
+  </form>
+  <p style="margin-top:1rem;">
+    {% translate "Pas encore de compte ?" %} <a href="{% url 'comptes:inscription' %}">{% translate "Créer un compte" %}</a>
+  </p>
+</div>
+{% endblock %}

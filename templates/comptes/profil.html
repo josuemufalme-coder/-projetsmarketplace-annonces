@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Mon profil" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Mon profil" %}</h1>
+  <p style="color:#667;margin-bottom:1rem;">{{ user.email }}</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-vert">{% translate "Enregistrer" %}</button>
+  </form>
+</div>
+{% endblock %}

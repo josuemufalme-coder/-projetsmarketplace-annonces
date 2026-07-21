@@ -5,9 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Kongo Market{% endblock %}</title>
   <meta name="description" content="{% translate 'Petites annonces à Kinshasa : immobilier, véhicules, téléphones, emploi et plus.' %}">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
   {% block head %}{% endblock %}
 </head>
 <body>
+{% block body %}
+<header class="entete">
+  <a class="marque" href="{% url 'core:home' %}">Kongo<span>Market</span></a>
+  <nav class="nav">
+    {% if user.is_authenticated %}
+      <a href="{% url 'comptes:profil' %}">{{ user.nom_affichage }}</a>
+      <form method="post" action="{% url 'comptes:deconnexion' %}" class="inline">
+        {% csrf_token %}
+        <button type="submit" class="lien">{% translate "Déconnexion" %}</button>
+      </form>
+    {% else %}
+      <a href="{% url 'comptes:connexion' %}">{% translate "Connexion" %}</a>
+      <a class="btn btn-jaune" href="{% url 'comptes:inscription' %}">{% translate "Créer un compte" %}</a>
+    {% endif %}
+  </nav>
+</header>
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}<p class="message {{ message.tags }}">{{ message }}</p>{% endfor %}
+</div>
+{% endif %}
+<main class="contenu">
   {% block content %}{% endblock %}
+</main>
+<footer class="pied">
+  <div class="langs">
+    {% get_current_language as CURRENT_LANG %}
+    {% for code, name in LANGUAGES %}
+    <form action="{% url 'set_language' %}" method="post" class="inline">
+      {% csrf_token %}
+      <input type="hidden" name="language" value="{{ code }}">
+      <button type="submit" class="puce-langue {% if code == CURRENT_LANG %}active{% endif %}" lang="{{ code }}">{{ code|upper }}</button>
+    </form>
+    {% endfor %}
+  </div>
+  <p>© Kongo Market — {% translate "Petites annonces à Kinshasa" %}</p>
+</footer>
+{% endblock %}
 </body>
 </html>

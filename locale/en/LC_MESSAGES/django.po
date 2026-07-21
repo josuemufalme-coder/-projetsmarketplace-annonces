@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 12:08+0100\n"
+"POT-Creation-Date: 2026-07-21 12:37+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: en\n"
@@ -12,15 +12,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: config/settings.py:99
+#: comptes/models.py:45
+msgid "adresse e-mail"
+msgstr "email address"
+
+#: comptes/models.py:46
+msgid "nom affiché"
+msgstr "display name"
+
+#: comptes/models.py:48
+msgid "téléphone"
+msgstr "phone number"
+
+#: comptes/models.py:51
+msgid ""
+"Affiché sur vos annonces uniquement si vous choisissez le mode « numéro "
+"affiché »."
+msgstr "Shown on your ads only if you choose the “displayed number” mode."
+
+#: comptes/models.py:55
+msgid "commune"
+msgstr "commune"
+
+#: comptes/views.py:17
+msgid "Bienvenue sur Kongo Market !"
+msgstr "Welcome to Kongo Market!"
+
+#: comptes/views.py:27
+msgid "Profil mis à jour."
+msgstr "Profile updated."
+
+#: config/settings.py:107
 msgid "Français"
 msgstr "French"
 
-#: config/settings.py:100
+#: config/settings.py:108
 msgid "Lingala"
 msgstr "Lingala"
 
-#: config/settings.py:101
+#: config/settings.py:109
 msgid "Anglais"
 msgstr "English"
 
@@ -28,13 +58,67 @@ msgstr "English"
 msgid ""
 "Petites annonces à Kinshasa : immobilier, véhicules, téléphones, emploi et "
 "plus."
-msgstr "Classified ads in Kinshasa: real estate, vehicles, phones, jobs and more."
+msgstr ""
+"Classified ads in Kinshasa: real estate, vehicles, phones, jobs and more."
 
-#: templates/core/home.html:4 templates/core/home.html:47
+#: templates/base.html:20
+msgid "Déconnexion"
+msgstr "Log out"
+
+#: templates/base.html:23 templates/comptes/connexion.html:4
+#: templates/comptes/connexion.html:8 templates/comptes/inscription.html:18
+msgid "Connexion"
+msgstr "Log in"
+
+#: templates/base.html:24 templates/comptes/connexion.html:18
+#: templates/comptes/inscription.html:4 templates/comptes/inscription.html:8
+msgid "Créer un compte"
+msgstr "Create an account"
+
+#: templates/base.html:47
+msgid "Petites annonces à Kinshasa"
+msgstr "Classified ads in Kinshasa"
+
+#: templates/comptes/connexion.html:10
+msgid "Adresse e-mail ou mot de passe incorrect."
+msgstr "Incorrect email address or password."
+
+#: templates/comptes/connexion.html:15
+msgid "Se connecter"
+msgstr "Log in"
+
+#: templates/comptes/connexion.html:18
+msgid "Pas encore de compte ?"
+msgstr "No account yet?"
+
+#: templates/comptes/inscription.html:10
+msgid ""
+"Gratuit et immédiat. Un compte est nécessaire pour publier une annonce ou "
+"contacter un vendeur."
+msgstr ""
+"Free and instant. An account is required to post an ad or contact a seller."
+
+#: templates/comptes/inscription.html:15
+msgid "Créer mon compte"
+msgstr "Create my account"
+
+#: templates/comptes/inscription.html:18
+msgid "Déjà un compte ?"
+msgstr "Already have an account?"
+
+#: templates/comptes/profil.html:4 templates/comptes/profil.html:8
+msgid "Mon profil"
+msgstr "My profile"
+
+#: templates/comptes/profil.html:13
+msgid "Enregistrer"
+msgstr "Save"
+
+#: templates/core/home.html:4 templates/core/home.html:36
 msgid "Bientôt disponible"
 msgstr "Coming soon"
 
-#: templates/core/home.html:49
+#: templates/core/home.html:38
 msgid ""
 "La plateforme de petites annonces de Kinshasa : immobilier, véhicules, "
 "téléphones, emploi, services et plus — gratuite pour tous."

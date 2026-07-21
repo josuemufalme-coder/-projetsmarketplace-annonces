@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Créer un compte" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Créer un compte" %}</h1>
+  <p style="color:#667;margin-bottom:1rem;">
+    {% translate "Gratuit et immédiat. Un compte est nécessaire pour publier une annonce ou contacter un vendeur." %}
+  </p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-vert">{% translate "Créer mon compte" %}</button>
+  </form>
+  <p style="margin-top:1rem;">
+    {% translate "Déjà un compte ?" %} <a href="{% url 'comptes:connexion' %}">{% translate "Connexion" %}</a>
+  </p>
+</div>
+{% endblock %}
