@@ -1,7 +1,7 @@
 # Cahier des charges — Kongo Market (MVP)
 
-**Version :** 0.1 — 21 juillet 2026
-**Statut :** Brouillon à valider par le fondateur
+**Version :** 0.2 — 21 juillet 2026
+**Statut :** Décisions fonctionnelles arbitrées par le fondateur (voir §7) — document de référence
 **Document :** Spécification des exigences logicielles (SRS) du produit minimum viable
 
 ---
@@ -24,11 +24,14 @@ services en confiance.
 
 ### 1.3 Le point de départ
 
-- **Ville de lancement :** Kinshasa.
-- **Principe fondateur :** la ville est une donnée structurée de la
-  plateforme dès le premier jour. Kinshasa n'est jamais codée en dur ;
-  l'ajout de Lubumbashi, Goma, Matadi ou toute autre ville se fait par
-  simple ajout d'une entrée en base de données, sans redéveloppement.
+- **Ville de lancement :** Kinshasa, avec la **commune** comme principal
+  niveau de localisation et de recherche (Gombe, Lemba, Masina,
+  Ngaliema…).
+- **Principe fondateur :** la localisation (ville, commune) est une donnée
+  structurée de la plateforme dès le premier jour. Kinshasa n'est jamais
+  codée en dur ; l'ajout de Lubumbashi, Goma, Matadi ou de toute autre
+  ville ou province se fait par simple ajout d'entrées en base de données,
+  sans redéveloppement.
 - **Modèle économique au lancement :** 100 % gratuit pour tous les
   utilisateurs. Aucun paiement intégré dans le MVP. L'architecture doit
   néanmoins laisser la porte ouverte aux futures sources de revenus
@@ -49,10 +52,10 @@ services en confiance.
 
 | Profil | Description | Besoin principal |
 |---|---|---|
-| **Visiteur** | Toute personne naviguant sans compte | Chercher, filtrer, consulter des annonces et contacter un vendeur (si numéro affiché) sans aucune barrière |
-| **Acheteur inscrit** | Visiteur ayant créé un compte | Contacter les vendeurs par messagerie interne, laisser des avis |
-| **Vendeur** | Utilisateur inscrit et vérifié par SMS | Publier, gérer, renouveler ses annonces ; être joignable selon le mode de contact qu'il a choisi |
-| **Administrateur** | Le fondateur (et plus tard une équipe de modération) | Traiter les signalements, retirer les annonces problématiques, gérer les référentiels (villes, catégories) |
+| **Visiteur** | Toute personne naviguant sans compte | Chercher, filtrer, consulter des annonces sans aucune barrière |
+| **Acheteur inscrit** | Visiteur ayant créé un compte | Afficher le numéro d'un vendeur, contacter par messagerie interne, laisser des avis |
+| **Vendeur** | Utilisateur inscrit | Publier, gérer, renouveler ses annonces ; être joignable selon le mode de contact qu'il a choisi |
+| **Administrateur** | Le fondateur (et plus tard une équipe de modération) | Traiter les signalements et les annonces marquées par l'anti-spam, retirer les annonces problématiques, gérer les référentiels (villes, communes, catégories) |
 
 Personas indicatifs à Kinshasa : une commerçante de Gombe qui vend des
 téléphones reconditionnés ; un particulier de Lemba qui cherche un
@@ -68,27 +71,44 @@ un étudiant qui revend son ordinateur portable.
 - **Navigation libre :** la consultation, la recherche et le filtrage des
   annonces sont accessibles sans compte, sans inscription, sans mur de
   connexion.
-- **Inscription :** requise pour publier une annonce, utiliser la
-  messagerie interne et laisser un avis.
-- **Vérification par SMS :** obligatoire avant la première publication
-  d'annonce. Un code à usage unique est envoyé au numéro de téléphone
-  déclaré ; le compte passe alors au statut « vérifié ».
-- **Profil utilisateur :** nom d'affichage, ville, photo facultative,
-  date d'inscription, note moyenne et avis reçus (voir §3.6).
+- **Inscription :** requise pour publier une annonce, afficher le numéro
+  d'un vendeur, utiliser la messagerie interne et laisser un avis.
+- **Pas de vérification par SMS dans le MVP** (décision Q3) : la création
+  de compte est immédiate, sans validation du numéro de téléphone.
+  L'architecture réserve néanmoins un statut de vérification sur le compte
+  (`non_verifie` par défaut) et isole l'étape d'inscription, afin que la
+  vérification SMS puisse être ajoutée dans une version future sans
+  modification majeure du système.
+- **Identifiant de connexion :** adresse e-mail + mot de passe.
+  L'e-mail est de toute façon requis pour les notifications de messagerie
+  (décision Q5). Le numéro de téléphone n'est demandé qu'au moment où le
+  vendeur publie une annonce en mode « numéro affiché ». *(Hypothèse de
+  conception découlant des décisions Q3 et Q5 — à confirmer, voir §7bis.)*
+- **Profil utilisateur :** nom d'affichage, commune/ville, photo
+  facultative, date d'inscription, note moyenne et avis reçus (voir §3.6).
 - **Rôles :** `utilisateur` et `administrateur` dans le MVP. Le champ rôle
-  est extensible (futur badge « vendeur professionnel », modérateurs).
+  est extensible (futurs badge « vendeur professionnel », comptes Premium,
+  modérateurs).
+- **Protection anti-abus :** limitation de débit sur l'inscription et la
+  publication (voir §5.3) — indispensable en l'absence de vérification
+  SMS.
 
-### 3.2 Villes et localisation
+### 3.2 Localisation : villes et communes
 
-- Référentiel de villes en base de données, administrable sans
-  déploiement. Chaque ville a un statut `active` / `inactive` : seules les
-  villes actives apparaissent dans les formulaires et filtres.
-- Au lancement, une seule ville active : Kinshasa.
-- Chaque annonce est rattachée à une ville obligatoire. Le profil
-  utilisateur porte aussi une ville.
-- Le filtre par ville est présent dans la recherche dès le MVP (même s'il
-  n'a qu'une valeur au départ), pour que l'expérience multi-villes soit
-  déjà en place le jour où une deuxième ville est activée.
+- Référentiel géographique à deux niveaux en base de données,
+  administrable sans déploiement : **Ville** (rattachable plus tard à une
+  province) et **Commune** (subdivision d'une ville).
+- Chaque ville a un statut `active` / `inactive` : seules les villes
+  actives apparaissent dans les formulaires et filtres. Au lancement, une
+  seule ville active : Kinshasa, avec son référentiel de communes.
+- Chaque annonce est rattachée à une **commune** obligatoire (donc à une
+  ville). Le profil utilisateur porte aussi une commune.
+- **La commune est le principal critère de localisation dans la recherche
+  au lancement** (décision Q6) : filtre par commune, affichage de la
+  commune sur chaque annonce. Le filtre par ville existe dès le MVP et
+  prendra son sens à l'activation d'une deuxième ville.
+- L'ajout futur des provinces ne doit demander qu'une extension du
+  référentiel (niveau au-dessus de la ville), pas une refonte.
 
 ### 3.3 Catégories et annonces
 
@@ -105,25 +125,33 @@ un étudiant qui revend son ordinateur portable.
 
 **Champs communs à toute annonce :**
 
-- Titre, description, catégorie, ville
-- Prix : montant + devise (**USD ou CDF**, au choix du vendeur ; pas de
-  conversion automatique dans le MVP)
-- Photos (voir question ouverte Q7 sur le nombre et les limites)
+- Titre, description, catégorie, commune (et donc ville)
+- **Prix facultatif** (décision Q8) : soit un montant + devise (**USD ou
+  CDF**, au choix du vendeur, sans conversion automatique dans le MVP),
+  soit l'option « **Prix à discuter** » quand le vendeur ne souhaite pas
+  afficher de montant fixe (offres d'emploi, services, prestations…)
+- **Photos : jusqu'à 6 par annonce** (décision Q7). Les photos sont
+  **obligatoires** (au moins une) pour les catégories où elles sont
+  pertinentes — Immobilier, Véhicules, Électronique & Téléphones,
+  Habits & Mode, Maison & Jardin — et facultatives pour Emploi, Services
+  et Autres. Ce caractère obligatoire est un paramètre de la catégorie,
+  pas une règle codée en dur. L'ajout de vidéos est prévu pour une version
+  ultérieure.
 - Mode de contact choisi par le vendeur (voir §3.5)
 - Dates de publication et d'expiration, statut
 
 **Champs spécifiques par catégorie** (exemples, liste exacte à valider) :
 
-| Catégorie | Champs spécifiques envisagés |
-|---|---|
-| Immobilier | Type de bien (maison, appartement, parcelle, bureau), transaction (vente / location), surface (m²), nombre de pièces |
-| Véhicules | Type (voiture, moto, camion), marque, modèle, année, kilométrage, carburant, boîte de vitesses |
-| Électronique & Téléphones | Type d'appareil, marque, état (neuf / occasion) |
-| Habits & Mode | Type d'article, taille, état, genre |
-| Emploi | Type de contrat, secteur, niveau d'expérience — offre ou demande d'emploi |
-| Services | Type de service, zone d'intervention |
-| Maison & Jardin | Type d'article, état |
-| Autres | Aucun champ spécifique |
+| Catégorie | Photos | Champs spécifiques envisagés |
+|---|---|---|
+| Immobilier | Obligatoires | Type de bien (maison, appartement, parcelle, bureau), transaction (vente / location), surface (m²), nombre de pièces |
+| Véhicules | Obligatoires | Type (voiture, moto, camion), marque, modèle, année, kilométrage, carburant, boîte de vitesses |
+| Électronique & Téléphones | Obligatoires | Type d'appareil, marque, état (neuf / occasion) |
+| Habits & Mode | Obligatoires | Type d'article, taille, état, genre |
+| Emploi | Facultatives | Type de contrat, secteur, niveau d'expérience — offre ou demande d'emploi ; salaire facultatif |
+| Services | Facultatives | Type de service, zone d'intervention |
+| Maison & Jardin | Obligatoires | Type d'article, état |
+| Autres | Facultatives | Aucun champ spécifique |
 
 Ces champs sont **structurés** (pas du texte libre dans la description) afin
 d'alimenter les filtres de recherche par catégorie. Le modèle de données
@@ -133,18 +161,26 @@ doit permettre d'ajouter un champ à une catégorie sans migration lourde
 **Cycle de vie d'une annonce :**
 
 ```
-brouillon (facultatif) → publiée → expirée (30 jours)
-                            │            │
-                            │            └─ renouvelée en 1 clic → publiée (30 jours de plus)
+brouillon (facultatif) → publiée immédiatement → expirée (30 jours)
+                            │                        │
+                            │                        └─ renouvelée en 1 clic → publiée (30 jours de plus)
+                            ├─ marquée par l'anti-spam → file de revue admin
                             ├─ retirée par le vendeur (vendu / plus disponible)
-                            └─ retirée par un administrateur (suite à modération)
+                            └─ suspendue ou supprimée par un administrateur
 ```
 
-- **Expiration automatique :** 30 jours après publication. L'annonce
-  expirée n'apparaît plus dans la recherche mais reste visible dans
-  l'espace du vendeur.
-- **Renouvellement :** bouton « renouveler » en un clic depuis l'espace
-  vendeur, qui republie l'annonce pour 30 jours.
+- **Publication immédiate** (décision Q2) : aucune validation préalable.
+  Les annonces sont analysées automatiquement par des règles anti-spam à
+  la publication (voir §3.7).
+- **Expiration automatique :** 30 jours après publication ou dernier
+  renouvellement. L'annonce expirée n'apparaît plus dans la recherche mais
+  reste visible dans l'espace du vendeur.
+- **Renouvellement** (décision Q10) : bouton « renouveler » en un clic
+  depuis l'espace vendeur. L'annonce renouvelée **remonte en tête des
+  résultats** comme une nouvelle publication et repart pour 30 jours.
+  Pour éviter les abus, le renouvellement des annonces gratuites est
+  **limité à une fois tous les 7 jours** (paramètre configurable). Les
+  futurs comptes Premium bénéficieront de davantage de remontées (§8).
 - Le vendeur peut modifier ou retirer son annonce à tout moment.
 
 ### 3.4 Recherche et navigation
@@ -152,11 +188,15 @@ brouillon (facultatif) → publiée → expirée (30 jours)
 - Page d'accueil : annonces récentes, accès par catégorie, barre de
   recherche.
 - Recherche par mots-clés sur titre et description.
-- Filtres : catégorie, ville, fourchette de prix **par devise**, champs
-  spécifiques de la catégorie sélectionnée (ex. : nombre de pièces en
-  immobilier, marque en véhicules).
-- Tri : plus récentes d'abord (par défaut), prix croissant / décroissant
-  au sein d'une devise (voir question ouverte Q4).
+- Filtres : catégorie, **commune** (critère principal au lancement),
+  ville, fourchette de prix **par devise** (décision Q4 : « Prix en USD
+  entre … et … » — pas de conversion, les annonces « à discuter » restant
+  visibles hors filtre de prix), champs spécifiques de la catégorie
+  sélectionnée (ex. : nombre de pièces en immobilier, marque en
+  véhicules).
+- Tri : plus récentes d'abord (par défaut — la date de dernier
+  renouvellement compte comme date de publication), prix croissant /
+  décroissant au sein d'une devise.
 - Pages d'annonce accessibles par URL publique partageable (WhatsApp étant
   un canal de diffusion majeur à Kinshasa).
 
@@ -164,12 +204,15 @@ brouillon (facultatif) → publiée → expirée (30 jours)
 
 Au moment de la publication, le vendeur choisit **un** des deux modes :
 
-1. **Numéro affiché :** son numéro de téléphone apparaît sur l'annonce ;
-   tout visiteur (même sans compte) peut l'appeler ou le contacter hors
-   plateforme.
-2. **Messagerie interne uniquement :** le numéro est masqué ; le contact
-   passe par la messagerie de Kongo Market, qui nécessite un compte côté
-   acheteur.
+1. **Numéro affiché :** le numéro est disponible sur l'annonce, mais
+   **masqué derrière un bouton « Afficher le numéro »** (décision Q9) afin
+   de limiter la récupération automatique par des robots. Le clic exige
+   d'être connecté ; chaque clic est **journalisé** (statistiques pour le
+   vendeur + preuve de contact pour le système d'avis, décision Q1). Les
+   numéros ne doivent pas être indexables par les moteurs de recherche.
+2. **Messagerie interne uniquement :** le numéro est masqué partout ; le
+   contact passe par la messagerie de Kongo Market, qui nécessite un
+   compte côté acheteur.
 
 **Messagerie interne (MVP) :**
 
@@ -177,51 +220,64 @@ Au moment de la publication, le vendeur choisit **un** des deux modes :
   acheteur / annonce).
 - Boîte de réception avec compteur de messages non lus.
 - Pas de pièces jointes dans le MVP ; texte uniquement.
-- Notification des nouveaux messages : voir question ouverte Q5.
+- **Notification par e-mail** (décision Q5) : le destinataire d'un nouveau
+  message est prévenu par e-mail (avec regroupement pour éviter un e-mail
+  par message). Les notifications push arriveront avec les applications
+  mobiles.
 
 ### 3.6 Profils vendeurs, avis et notation
 
 - Chaque utilisateur a un profil public listant ses annonces actives.
-- **Avis :** un acheteur peut laisser sur le profil d'un vendeur une note
-  en étoiles (1 à 5) accompagnée d'un commentaire textuel, après un
-  contact.
+- **Avis** (décision Q1) : peut laisser un avis tout utilisateur connecté
+  ayant effectué une **action de contact traçable sur la plateforme**
+  envers ce vendeur : clic sur « Afficher le numéro » ou envoi d'un
+  message interne. Aucune preuve de transaction n'est exigée — seule
+  l'initiation du contact depuis la plateforme conditionne le droit
+  de noter.
+- Un avis = note en étoiles (1 à 5) + commentaire textuel.
 - **Note moyenne** affichée sur le profil et rappelée sur chaque annonce
   du vendeur.
 - Un même acheteur ne peut laisser qu'un avis par vendeur (modifiable),
   pour limiter le spam de notation.
-- Les conditions exactes ouvrant le droit de laisser un avis (comment
-  vérifier qu'il y a eu « contact » ?) sont à trancher : voir question
-  ouverte **Q1**, la plus structurante du document.
 
 ### 3.7 Signalement et modération
 
-- **Bouton « Signaler »** sur chaque annonce, accessible à tous (y compris
-  visiteurs sans compte), avec un motif à choisir (arnaque présumée,
-  contenu illicite, doublon, mauvaise catégorie, autre) et un commentaire
-  libre facultatif.
-- Les signalements alimentent une **file de revue** dans l'interface
-  d'administration. Un administrateur examine chaque signalement et
-  décide : rejeter le signalement, retirer l'annonce, ou (cas graves)
-  suspendre le compte du vendeur.
-- **Pas de modération automatique** (filtrage par mots-clés, IA) dans le
-  MVP — décision assumée, à réévaluer avec le volume.
-- Les annonces sont publiées **immédiatement**, sans validation préalable
-  (modération a posteriori uniquement) — à confirmer, voir question
-  ouverte Q2.
+La modération combine trois sources, toutes traitées par un humain :
+
+1. **Signalements des utilisateurs :** bouton « Signaler » sur chaque
+   annonce, accessible à tous (y compris visiteurs sans compte), avec un
+   motif à choisir (arnaque présumée, contenu illicite, doublon, mauvaise
+   catégorie, autre) et un commentaire libre facultatif.
+2. **Règles anti-spam automatiques** (décision Q2) : à la publication,
+   chaque annonce passe par des règles simples (ex. : publication en
+   rafale, doublons quasi identiques, motifs frauduleux connus). Une
+   annonce suspecte est **marquée et versée dans la file de revue** —
+   les règles automatiques **ne suppriment jamais rien elles-mêmes**.
+   La liste des règles v1 est à définir en conception détaillée.
+3. **Initiative de l'administrateur**, qui peut agir sur toute annonce.
+
+**Traitement :** signalements et annonces marquées alimentent une **file
+de revue** unique dans l'interface d'administration. L'administrateur
+examine chaque cas et décide : rejeter le signalement / la marque,
+**modifier**, **suspendre** ou **supprimer** l'annonce, ou (cas graves)
+suspendre le compte du vendeur.
+
 - Toute action de modération est journalisée (qui, quoi, quand, motif).
 
 ### 3.8 Administration
 
 Interface réservée aux administrateurs :
 
-- File des signalements avec actions (rejeter, retirer l'annonce,
-  suspendre le compte).
-- Gestion des référentiels : villes (ajout / activation), catégories et
-  leurs champs spécifiques.
+- File de revue unifiée (signalements + annonces marquées par
+  l'anti-spam) avec actions : rejeter, modifier, suspendre ou supprimer
+  l'annonce, suspendre le compte.
+- Gestion des référentiels : villes et communes (ajout / activation),
+  catégories, leurs champs spécifiques et leur paramètre « photos
+  obligatoires ».
 - Recherche d'utilisateurs et d'annonces ; suspension / réactivation de
   comptes.
 - Tableau de bord minimal : nombre d'annonces publiées, d'inscriptions,
-  de signalements en attente.
+  de signalements et de marques anti-spam en attente.
 
 ### 3.9 Internationalisation (i18n)
 
@@ -245,33 +301,39 @@ Entités principales et relations (niveau conceptuel, pas un schéma SQL
 définitif) :
 
 ```
-Ville ──< Utilisateur ──< Annonce >── Catégorie
-                │            │              │
-                │            ├──< Photo     └──< DéfinitionDeChamp
-                │            ├──< ValeurDeChamp (par annonce)
-                │            ├──< Signalement
-                │            └──< Conversation ──< Message
-                └──< Avis (émis et reçus)
+Ville ──< Commune ──< Utilisateur ──< Annonce >── Catégorie
+                          │             │               │
+                          │             ├──< Photo      └──< DéfinitionDeChamp
+                          │             ├──< ValeurDeChamp (par annonce)
+                          │             ├──< Signalement
+                          │             ├──< MarqueAntiSpam
+                          │             ├──< ClicAffichageNuméro
+                          │             └──< Conversation ──< Message
+                          └──< Avis (émis et reçus)
 ```
 
 | Entité | Attributs clés | Notes |
 |---|---|---|
-| **Ville** | nom, statut actif/inactif | Référentiel administrable ; jamais de ville en dur dans le code |
-| **Utilisateur** | téléphone (identifiant de connexion), nom d'affichage, ville, rôle, statut de vérification SMS, statut du compte (actif / suspendu) | Le rôle est extensible (futur badge pro) |
-| **Catégorie** | nom (traduisible), ordre d'affichage | Les 8 catégories du lancement |
+| **Ville** | nom, statut actif/inactif | Extensible plus tard vers un niveau Province au-dessus ; jamais de ville en dur dans le code |
+| **Commune** | ville, nom, statut | Niveau principal de localisation au lancement (Kinshasa) |
+| **Utilisateur** | e-mail (identifiant de connexion), mot de passe, nom d'affichage, téléphone (facultatif), commune, rôle, statut de vérification (`non_verifie` par défaut — réservé pour la future vérification SMS), statut du compte (actif / suspendu) | Rôle extensible (Premium, badge pro, modérateur) |
+| **Catégorie** | nom (traduisible), ordre d'affichage, **photos obligatoires (oui/non)** | Les 8 catégories du lancement |
 | **DéfinitionDeChamp** | catégorie, nom, type (texte, nombre, liste de valeurs), obligatoire ou non | Permet d'ajouter un champ à une catégorie sans migration lourde (modèle attributs dynamiques ou colonne JSON) |
-| **Annonce** | titre, description, catégorie, ville, prix, **devise (USD/CDF)**, mode de contact, statut, date de publication, date d'expiration | L'expiration = publication + 30 jours ; le renouvellement repousse la date |
+| **Annonce** | titre, description, catégorie, commune, **prix (nullable)**, devise (USD/CDF, nullable), **indicateur « prix à discuter »**, mode de contact, statut, date de publication, **date de dernier renouvellement** (sert au tri et à la limite de 7 jours), date d'expiration | Expiration = dernier renouvellement + 30 jours |
 | **ValeurDeChamp** | annonce, définition de champ, valeur | Valeurs des champs spécifiques |
-| **Photo** | annonce, fichier, ordre | Stockage objet + variantes redimensionnées |
-| **Conversation / Message** | annonce, participants ; expéditeur, texte, lu/non-lu | Un fil par couple acheteur-annonce |
-| **Avis** | auteur, vendeur visé, note 1–5, commentaire, date | Un avis par couple acheteur-vendeur |
+| **Photo** | annonce, fichier, ordre (max 6) | Stockage objet + variantes redimensionnées ; le type vidéo est une extension future |
+| **ClicAffichageNuméro** | annonce, utilisateur, date | Journal des clics « Afficher le numéro » : statistiques vendeur + condition d'accès aux avis (Q1/Q9) |
+| **Conversation / Message** | annonce, participants ; expéditeur, texte, lu/non-lu, notification e-mail envoyée | Un fil par couple acheteur-annonce |
+| **Avis** | auteur, vendeur visé, note 1–5, commentaire, date | Un avis par couple acheteur-vendeur ; création autorisée seulement si un ClicAffichageNuméro ou un Message de l'auteur vers ce vendeur existe |
 | **Signalement** | annonce, auteur (nullable si visiteur), motif, statut de traitement, administrateur, décision | Alimente la file de modération |
+| **MarqueAntiSpam** | annonce, règle déclenchée, date, statut de traitement | Alimente la même file de revue que les signalements |
 | **JournalModération** | administrateur, action, cible, motif, date | Traçabilité des actions admin |
 
 **Prévu dans le schéma mais inactif dans le MVP** (voir §8) : champs de
-mise en avant sur l'annonce (`premium_jusqu_au`, nullable), rôle
-« vendeur professionnel », table d'emplacements publicitaires. Ces éléments
-sont *réservés* dans la conception, **pas développés**.
+mise en avant sur l'annonce (`premium_jusqu_au`, nullable), rôle / statut
+« Premium » et « vendeur professionnel », table d'emplacements
+publicitaires, statut de vérification SMS. Ces éléments sont *réservés*
+dans la conception, **pas développés**.
 
 ---
 
@@ -294,21 +356,29 @@ sont *réservés* dans la conception, **pas développés**.
 
 ### 5.3 Sécurité et intégrité
 
-- Envoi de SMS via un fournisseur couvrant les opérateurs congolais
-  (Vodacom, Airtel, Orange, Africell) — choix du fournisseur : question
-  ouverte Q3.
-- Limitation de débit (rate limiting) sur : envoi de codes SMS, création
-  d'annonces, envoi de messages, dépôt de signalements — protection de
-  base contre le spam même sans modération automatique.
-- Données personnelles : le numéro de téléphone n'est jamais exposé
-  publiquement sauf choix explicite du vendeur sur une annonce donnée.
+- **Envoi d'e-mails transactionnels** (notifications de messages,
+  récupération de mot de passe) via un fournisseur à choisir — la
+  délivrabilité (éviter le dossier spam) est un point d'attention.
+- **Limitation de débit (rate limiting)** sur : inscription, création
+  d'annonces, envoi de messages, clics « Afficher le numéro », dépôt de
+  signalements et d'avis. C'est la première ligne de défense contre les
+  faux comptes, d'autant plus importante que le MVP n'a pas de
+  vérification SMS.
+- Les numéros de téléphone ne sont jamais présents dans le HTML initial
+  d'une page publique (chargés seulement au clic « Afficher le numéro »,
+  utilisateur connecté) et ne sont pas indexables.
+- Mots de passe stockés hachés (algorithme moderne), sessions sécurisées.
 - Sauvegardes régulières de la base de données.
 
 ### 5.4 Extensibilité (contraintes d'architecture, sans développement MVP)
 
-- Aucune valeur métier codée en dur : villes, catégories, champs par
-  catégorie, motifs de signalement et durée de vie des annonces (30 jours)
-  sont des données ou de la configuration.
+- Aucune valeur métier codée en dur : villes, communes, catégories,
+  champs par catégorie, motifs de signalement, règles anti-spam, durée de
+  vie des annonces (30 jours) et délai minimal entre renouvellements
+  (7 jours) sont des données ou de la configuration.
+- L'étape d'inscription est conçue pour accueillir plus tard une
+  vérification SMS sans refonte (statut de vérification déjà présent sur
+  le compte).
 - Le modèle utilisateur et le modèle annonce réservent les emplacements
   nécessaires aux évolutions payantes (§8) sans les implémenter.
 
@@ -324,146 +394,93 @@ décision dédiée à l'étape suivante, une fois ce cahier des charges validé.
 
 Explicitement exclus de la première version :
 
+- **Vérification du numéro de téléphone par SMS** (décision Q3 — reportée
+  à une version future, architecture prête).
 - Application mobile native (iOS / Android) et notifications push.
-- Tout paiement intégré : mise en avant payante, abonnements, mobile money.
+- Tout paiement intégré : mise en avant payante, comptes Premium,
+  abonnements, mobile money.
 - Conversion automatique USD ↔ CDF et affichage multi-devises d'un même
   prix.
-- Modération automatique (mots-clés, détection d'images, IA).
+- Suppression ou modification **automatique** d'annonces : les règles
+  anti-spam marquent pour revue humaine, elles n'agissent jamais seules.
+- Vidéos dans les annonces.
 - Traduction automatique du contenu des annonces.
 - Badge « vendeur professionnel » et comptes boutique.
 - Espaces publicitaires.
 - Géolocalisation fine (carte, rayon de recherche) — la localisation du
-  MVP est la ville (et éventuellement la commune, voir Q6).
+  MVP est la commune et la ville.
 - Enchères, panier, commande en ligne, livraison.
 - Villes autres que Kinshasa *activées* (le support multi-villes existe,
   seule Kinshasa est active).
 
 ---
 
-## 7. Incohérences et questions ouvertes
+## 7. Journal des décisions (arbitrages du fondateur)
 
-Points identifiés à la relecture des décisions — **à trancher avant ou
-pendant la conception détaillée**, classés par importance.
+Décisions fonctionnelles officielles rendues le 21 juillet 2026 sur les
+dix questions ouvertes de la version 0.1. Elles font référence pour la
+conception, le développement et les évolutions futures.
 
-### Q1 — Qui a le droit de laisser un avis ? *(structurant)*
+| # | Question | Décision |
+|---|---|---|
+| **Q1** | Droit de laisser un avis | Réservé aux utilisateurs connectés ayant une action de contact **traçable sur la plateforme** (clic « Afficher le numéro » ou message interne). Pas de preuve de transaction exigée. |
+| **Q2** | Publication des annonces | **Immédiate**, sans validation préalable. Analyse automatique par des règles anti-spam qui **marquent** les annonces suspectes pour revue humaine. L'administrateur peut modifier, suspendre ou supprimer toute annonce. |
+| **Q3** | Vérification SMS | **Retirée du MVP** (coûts, simplicité, indépendance vis-à-vis des fournisseurs SMS). Création de compte sans validation SMS. Architecture prête pour l'ajouter plus tard sans modification majeure. |
+| **Q4** | Devises | USD ou CDF au choix du vendeur ; filtres de prix **par devise**, aucune conversion automatique dans le MVP. |
+| **Q5** | Notification des messages | **E-mail** à la réception d'un message interne dans le MVP ; notifications push reportées aux applications mobiles. |
+| **Q6** | Localisation | Lancement centré sur Kinshasa avec la **commune** comme principal niveau de localisation et de recherche. Architecture prête pour l'ajout des autres villes et provinces. |
+| **Q7** | Photos | Jusqu'à **6 photos** par annonce. Obligatoires pour les catégories où elles sont pertinentes (véhicules, immobilier, électronique, vêtements, mobilier), facultatives ailleurs. Vidéos prévues pour une version ultérieure. |
+| **Q8** | Prix | **Facultatif**, avec option « **Prix à discuter** » (emplois, services, prestations…). |
+| **Q9** | Affichage du numéro | Numéro masqué derrière un bouton « **Afficher le numéro** » ; chaque clic est journalisé (statistiques + preuve de contact pour les avis). |
+| **Q10** | Renouvellement | Le renouvellement **remonte l'annonce en tête** des résultats. Limité pour les annonces gratuites (**une fois tous les 7 jours**) ; les comptes Premium auront davantage de remontées. |
 
-La décision dit : avis « laissés par les acheteurs **après contact** ».
-Or, quand le vendeur choisit d'afficher son numéro, le contact se fait
-**hors plateforme** (appel, WhatsApp) : Kongo Market n'a aucun moyen de
-savoir qu'il a eu lieu. Trois options :
+## 7bis. Questions ouvertes restantes
 
-- **(a)** Avis réservés aux acheteurs ayant échangé via la messagerie
-  interne → avis fiables, mais les vendeurs « numéro affiché » (sans doute
-  la majorité) ne recevraient presque jamais d'avis ;
-- **(b)** Tout utilisateur connecté peut noter n'importe quel vendeur →
-  couverture maximale, mais porte ouverte aux faux avis (positifs comme
-  malveillants) ;
-- **(c)** Intermédiaire : avis ouvert à tout utilisateur connecté **ayant
-  déclenché une action de contact tracée sur la plateforme** (clic sur
-  « afficher le numéro », qui est alors journalisé, ou message interne).
+Points secondaires découlant des arbitrages, à confirmer au fil de la
+conception (aucun ne bloque le démarrage) :
 
-**Recommandation : (c)** — elle couvre les deux modes de contact tout en
-exigeant une trace d'intention réelle. À valider.
-
-### Q2 — Publication immédiate ou validation préalable ?
-
-La décision de modération ne parle que des **signalements**. Ce document
-suppose que les annonces sont **publiées immédiatement** et modérées a
-posteriori (§3.7). Alternative : faire valider chaque annonce par
-l'administrateur avant publication — qualité maximale, mais goulot
-d'étranglement intenable pour une seule personne dès que le volume monte.
-**Recommandation : publication immédiate.** À confirmer.
-
-### Q3 — Vérification SMS : coût et fournisseur *(risque opérationnel)*
-
-La plateforme est gratuite pour les utilisateurs, mais **chaque SMS de
-vérification a un coût pour toi**, et c'est la seule barrière à l'entrée
-des vendeurs. À instruire avant le développement : choix d'un fournisseur
-fiable en RDC (Africa's Talking, Twilio, agrégateur local…), coût
-unitaire, budget mensuel estimé, et comportement de secours si le SMS
-n'arrive pas (renvoi limité, appel vocal ?). Risque à documenter : des
-échecs de délivrance SMS bloqueraient toute nouvelle publication.
-
-### Q4 — Deux devises sans conversion : tri et filtres de prix
-
-Sans taux de conversion, il est impossible de trier ou filtrer par prix
-une liste mêlant USD et CDF. Ce document retient l'approche : **fourchette
-de prix et tri par prix ne s'appliquent qu'au sein d'une devise choisie**
-(« Prix en USD entre … et … »). Conséquence assumée : un acheteur qui
-filtre en USD ne voit pas les annonces équivalentes en CDF. À valider.
-
-### Q5 — Notification des messages internes *(risque produit)*
-
-Sans application mobile ni push, un vendeur « messagerie uniquement »
-n'apprend l'existence d'un message qu'en revenant sur le site → risque
-fort de messages sans réponse, décourageant pour les acheteurs. Options :
-notification par e-mail (mais l'e-mail est peu utilisé par la cible),
-notification par SMS (coût par message, cf. Q3), ou rien dans le MVP en
-assumant le risque. **À trancher — aucune option par défaut retenue.**
-
-### Q6 — Granularité de la localisation à Kinshasa
-
-Avec une seule ville active, le filtre « ville » ne discrimine rien au
-lancement. Kinshasa est immense : la **commune** (Gombe, Lemba, Masina,
-Ngaliema…) est probablement le vrai critère de proximité pour les
-utilisateurs. Faut-il un champ « commune / quartier » structuré sous la
-ville dès le MVP ? Coût faible maintenant, coûteux à rattraper plus tard.
-**Recommandation : oui, prévoir le niveau commune dès le départ.**
-
-### Q7 — Les photos ne figurent pas dans les décisions
-
-Aucune décision ne mentionne les photos, pourtant essentielles à une
-plateforme d'annonces. Ce document les suppose incluses (§3.3). À
-préciser : nombre maximal par annonce (proposition : 6), taille maximale,
-photo obligatoire ou non selon la catégorie (une annonce immobilière sans
-photo a peu de valeur ; une offre d'emploi n'en a pas besoin).
-
-### Q8 — La catégorie Emploi cadre mal avec le modèle « prix »
-
-Une offre d'emploi n'a pas de « prix » ; un salaire ne se déclare pas
-comme le prix d'un téléphone. De même, beaucoup de services sont « à
-négocier ». Proposition : rendre le prix **facultatif** avec une mention
-« Prix à discuter », et pour l'Emploi, un champ salaire facultatif
-distinct. À valider — sinon, le champ prix obligatoire produira des
-valeurs absurdes (0, 1…).
-
-### Q9 — Numéros affichés : exposition au démarchage
-
-Les numéros affichés publiquement sur les annonces peuvent être aspirés
-par des robots (spam, arnaques ciblées). Mesure simple envisagée : masquer
-le numéro derrière un clic « Afficher le numéro » (ce qui sert aussi la
-traçabilité de Q1-option c) et bloquer l'indexation des numéros par les
-moteurs de recherche. À valider.
-
-### Q10 — Renouvellement et position dans les résultats
-
-Le tri par défaut étant « plus récentes d'abord », que fait le
-renouvellement : il remonte l'annonce en tête (incitation à renouveler,
-mais risque d'annonces zombies remontées indéfiniment) ou il conserve la
-date d'origine (annonces renouvelées invisibles en pratique) ?
-**Recommandation : le renouvellement remonte l'annonce**, avec une limite
-(ex. 3 renouvellements consécutifs sans modification). À valider.
+- **R1 — Identifiant de connexion.** Ce document retient **e-mail + mot
+  de passe** (l'e-mail étant déjà requis pour les notifications Q5, et le
+  SMS étant retiré). Alternative possible : numéro de téléphone + mot de
+  passe sans vérification. À confirmer avant le développement du module
+  comptes.
+- **R2 — Règles anti-spam v1.** La décision Q2 introduit une analyse
+  automatique ; la liste concrète des premières règles (seuils de
+  publication en rafale, détection de doublons, motifs connus) est à
+  définir en conception détaillée, en cohérence avec le principe « jamais
+  de suppression automatique ».
+- **R3 — Liste officielle des communes de Kinshasa** à charger comme
+  référentiel de départ (les 24 communes officielles, ou une liste
+  enrichie de quartiers usuels).
 
 ---
 
 ## 8. Évolutions prévues (architecture prête, développement ultérieur)
 
-Rappel des pistes de monétisation décidées, dont l'architecture tient
-compte sans les développer :
+Rappel des pistes décidées, dont l'architecture tient compte sans les
+développer :
 
-1. **Mise en avant payante d'annonces** — champs réservés sur l'annonce,
-   emplacement visuel prévu dans les listes.
-2. **Badge vendeur professionnel** — extension du système de rôles.
-3. **Espaces publicitaires** — zones prévues dans la maquette des pages.
+1. **Vérification du numéro par SMS** — statut de vérification déjà
+   présent sur le compte, étape d'inscription isolée.
+2. **Mise en avant payante d'annonces et comptes Premium** — champs
+   réservés sur l'annonce, renouvellements supplémentaires pour les
+   comptes Premium (décision Q10), emplacement visuel prévu dans les
+   listes.
+3. **Badge vendeur professionnel** — extension du système de rôles.
+4. **Espaces publicitaires** — zones prévues dans la maquette des pages.
+5. **Vidéos dans les annonces** — extension du modèle Photo en modèle
+   Média.
 
 S'y ajoutent naturellement, sans engagement : activation de nouvelles
-villes, application mobile, paiement mobile money, modération assistée.
+villes et provinces, applications mobiles avec notifications push,
+paiement mobile money, modération assistée.
 
 ---
 
 ## 9. Suites de ce document
 
-1. Validation du présent document et arbitrage des questions Q1 à Q10.
+1. ~~Validation du document v0.1 et arbitrage des questions Q1 à Q10.~~
+   **Fait — arbitrages intégrés dans cette version 0.2 (§7).**
 2. Choix de la pile technique et de l'hébergement (décision dédiée).
 3. Maquettes des écrans clés (accueil, recherche, annonce, publication).
 4. Découpage du développement en étapes testables une par une.
