@@ -153,3 +153,20 @@ class FinitionsTests(TestCase):
         reponse = self.client.get(reverse("core:home"))
         self.assertContains(reponse, 'property="og:site_name"')
         self.assertContains(reponse, 'property="og:title"')
+
+
+class DonneesDemoTests(TestCase):
+    """Étape 11 : la commande de démonstration produit des pages valides."""
+
+    def test_charger_demo_et_naviguer(self):
+        from django.core.management import call_command
+
+        call_command("charger_demo", verbosity=0)
+        self.assertEqual(Annonce.objects.count(), 12)
+        # Chaque page de détail doit répondre 200 (slugs valides).
+        for annonce in Annonce.objects.all():
+            reponse = self.client.get(annonce.get_absolute_url())
+            self.assertEqual(reponse.status_code, 200, annonce.titre)
+        # La commande est idempotente.
+        call_command("charger_demo", verbosity=0)
+        self.assertEqual(Annonce.objects.count(), 12)
