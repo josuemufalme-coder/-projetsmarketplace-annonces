@@ -1,6 +1,6 @@
 # Cahier des charges — Kongo Market (MVP)
 
-**Version :** 0.2 — 21 juillet 2026
+**Version :** 0.3 — 21 juillet 2026
 **Statut :** Décisions fonctionnelles arbitrées par le fondateur (voir §7) — document de référence
 **Document :** Spécification des exigences logicielles (SRS) du produit minimum viable
 
@@ -79,11 +79,12 @@ un étudiant qui revend son ordinateur portable.
   (`non_verifie` par défaut) et isole l'étape d'inscription, afin que la
   vérification SMS puisse être ajoutée dans une version future sans
   modification majeure du système.
-- **Identifiant de connexion :** adresse e-mail + mot de passe.
-  L'e-mail est de toute façon requis pour les notifications de messagerie
-  (décision Q5). Le numéro de téléphone n'est demandé qu'au moment où le
-  vendeur publie une annonce en mode « numéro affiché ». *(Hypothèse de
-  conception découlant des décisions Q3 et Q5 — à confirmer, voir §7bis.)*
+- **Identifiant de connexion** (décision R1) : adresse e-mail + mot de
+  passe. L'e-mail est de toute façon requis pour les notifications de
+  messagerie (décision Q5). Le numéro de téléphone est renseigné dans le
+  profil afin d'être affiché sur les annonces (mode « numéro affiché »),
+  mais ne sert pas de moyen de connexion dans le MVP. La connexion par
+  numéro de téléphone pourra être ajoutée dans une version ultérieure.
 - **Profil utilisateur :** nom d'affichage, commune/ville, photo
   facultative, date d'inscription, note moyenne et avis reçus (voir §3.6).
 - **Rôles :** `utilisateur` et `administrateur` dans le MVP. Le champ rôle
@@ -249,11 +250,11 @@ La modération combine trois sources, toutes traitées par un humain :
    motif à choisir (arnaque présumée, contenu illicite, doublon, mauvaise
    catégorie, autre) et un commentaire libre facultatif.
 2. **Règles anti-spam automatiques** (décision Q2) : à la publication,
-   chaque annonce passe par des règles simples (ex. : publication en
-   rafale, doublons quasi identiques, motifs frauduleux connus). Une
-   annonce suspecte est **marquée et versée dans la file de revue** —
-   les règles automatiques **ne suppriment jamais rien elles-mêmes**.
-   La liste des règles v1 est à définir en conception détaillée.
+   chaque annonce passe par des règles simples (publication en rafale,
+   doublons quasi identiques, motifs frauduleux connus…). Une annonce
+   suspecte est **marquée et versée dans la file de revue** — les règles
+   automatiques **ne suppriment jamais rien elles-mêmes**. La liste des
+   règles v1 est spécifiée en **Annexe A**.
 3. **Initiative de l'administrateur**, qui peut agir sur toute annonce.
 
 **Traitement :** signalements et annonces marquées alimentent une **file
@@ -385,8 +386,9 @@ dans la conception, **pas développés**.
 ### 5.5 Choix de pile technique
 
 Volontairement **non figés dans ce document** : le choix du langage, du
-framework, de la base de données et de l'hébergement fera l'objet d'une
-décision dédiée à l'étape suivante, une fois ce cahier des charges validé.
+framework, de la base de données et de l'hébergement fait l'objet d'une
+recommandation dédiée dans **`docs/tech-stack.md`**, à valider par le
+fondateur.
 
 ---
 
@@ -434,24 +436,14 @@ conception, le développement et les évolutions futures.
 | **Q9** | Affichage du numéro | Numéro masqué derrière un bouton « **Afficher le numéro** » ; chaque clic est journalisé (statistiques + preuve de contact pour les avis). |
 | **Q10** | Renouvellement | Le renouvellement **remonte l'annonce en tête** des résultats. Limité pour les annonces gratuites (**une fois tous les 7 jours**) ; les comptes Premium auront davantage de remontées. |
 
-## 7bis. Questions ouvertes restantes
+**Arbitrages complémentaires** (rendus le 21 juillet 2026 sur les trois
+questions résiduelles de la v0.2) :
 
-Points secondaires découlant des arbitrages, à confirmer au fil de la
-conception (aucun ne bloque le démarrage) :
-
-- **R1 — Identifiant de connexion.** Ce document retient **e-mail + mot
-  de passe** (l'e-mail étant déjà requis pour les notifications Q5, et le
-  SMS étant retiré). Alternative possible : numéro de téléphone + mot de
-  passe sans vérification. À confirmer avant le développement du module
-  comptes.
-- **R2 — Règles anti-spam v1.** La décision Q2 introduit une analyse
-  automatique ; la liste concrète des premières règles (seuils de
-  publication en rafale, détection de doublons, motifs connus) est à
-  définir en conception détaillée, en cohérence avec le principe « jamais
-  de suppression automatique ».
-- **R3 — Liste officielle des communes de Kinshasa** à charger comme
-  référentiel de départ (les 24 communes officielles, ou une liste
-  enrichie de quartiers usuels).
+| # | Question | Décision |
+|---|---|---|
+| **R1** | Identifiant de connexion | **E-mail + mot de passe** dans le MVP. Le numéro de téléphone est renseigné dans le profil pour être affiché sur les annonces, mais ne sert pas à la connexion. Connexion par numéro de téléphone possible dans une version ultérieure. |
+| **R2** | Règles anti-spam v1 | Ensemble de règles simples proposé par l'équipe de conception, orienté contre les annonces frauduleuses, les doublons, les contenus inappropriés et les comportements abusifs, sans compliquer l'expérience des utilisateurs légitimes. Spécifié en **Annexe A**. |
+| **R3** | Référentiel de localisation | Les **24 communes officielles de Kinshasa** comme référentiel de départ. Architecture évolutive pour ajouter les autres villes, territoires et provinces de la RDC. |
 
 ---
 
@@ -480,7 +472,46 @@ paiement mobile money, modération assistée.
 ## 9. Suites de ce document
 
 1. ~~Validation du document v0.1 et arbitrage des questions Q1 à Q10.~~
-   **Fait — arbitrages intégrés dans cette version 0.2 (§7).**
-2. Choix de la pile technique et de l'hébergement (décision dédiée).
-3. Maquettes des écrans clés (accueil, recherche, annonce, publication).
-4. Découpage du développement en étapes testables une par une.
+   **Fait — arbitrages intégrés en v0.2 (§7).**
+2. ~~Arbitrage des questions résiduelles R1 à R3.~~ **Fait — intégrés en
+   v0.3 (§7 et Annexe A).**
+3. Choix de la pile technique et de l'hébergement — **recommandation
+   rédigée dans `docs/tech-stack.md`, à valider.**
+4. Maquettes des écrans clés (accueil, recherche, annonce, publication).
+5. Découpage du développement en étapes testables une par une.
+
+---
+
+## Annexe A — Règles anti-spam v1
+
+Spécification des règles automatiques introduites par la décision Q2 et
+arbitrées par la décision R2.
+
+**Principes directeurs :**
+
+- Les règles **ne suppriment jamais** une annonce ni un compte : elles
+  **marquent pour revue humaine** (une seule exception encadrée : AS8).
+- Tous les seuils sont des **paramètres de configuration**, ajustables
+  sans redéploiement, et pourront être calibrés après le lancement selon
+  les usages réels observés.
+- Chaque marque enregistre la règle déclenchée (traçabilité dans la file
+  de revue et le journal de modération).
+- Les règles doivent rester **invisibles pour un utilisateur légitime** :
+  aucune étape supplémentaire à la publication, aucun blocage en usage
+  normal.
+
+**Règles (seuils par défaut, à calibrer) :**
+
+| # | Règle | Déclencheur (défaut) | Effet |
+|---|---|---|---|
+| AS1 | Publication en rafale | Plus de 5 annonces publiées en 24 h par un même compte | Marque les annonces suivantes ; au-delà de 15/24 h, blocage temporaire de la publication (message clair à l'utilisateur) |
+| AS2 | Compte tout neuf très actif | Compte créé depuis moins de 24 h publiant plus de 3 annonces | Marque |
+| AS3 | Doublon même compte | Titre + description quasi identiques à une autre annonce active du même compte | Marque ; refus si strictement identique (avec message invitant à renouveler l'annonce existante) |
+| AS4 | Numéro partagé entre comptes | Même numéro de téléphone affiché sur des annonces de comptes différents | Marque |
+| AS5 | Motifs frauduleux connus | Présence dans le titre ou la description d'un motif de la liste administrable (ex. : demande de paiement d'avance, transfert avant visite) | Marque — la liste démarre courte et s'enrichit avec les arnaques réellement observées |
+| AS6 | Liens externes | URL dans le titre, ou plus de 2 liens dans la description | Marque |
+| AS7 | Prix aberrant | Prix très inférieur au plancher configurable de la catégorie (ex. : véhicule < 100 USD) | Marque |
+| AS8 | Seuil de signalements | 5 signalements de comptes distincts sur une même annonce | **Masquage temporaire** de l'annonce en attente de revue — seule règle à effet automatique, entièrement réversible par l'administrateur |
+
+Ces règles s'ajoutent à la limitation de débit générale (§5.3), qui
+constitue la première ligne de défense.
