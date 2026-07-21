@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "comptes",
     "messagerie",
     "avis",
+    "moderation",
 ]
 
 AUTH_USER_MODEL = "comptes.Utilisateur"
@@ -163,6 +164,18 @@ MEDIA_ROOT = BASE_DIR / "media"
 ANNONCE_DUREE_JOURS = int(os.environ.get("ANNONCE_DUREE_JOURS", 30))
 ANNONCE_RENOUVELLEMENT_JOURS = int(os.environ.get("ANNONCE_RENOUVELLEMENT_JOURS", 7))
 ANNONCE_MAX_PHOTOS = int(os.environ.get("ANNONCE_MAX_PHOTOS", 6))
+
+# Seuils des règles anti-spam (Annexe A du cahier des charges).
+ANTISPAM_RAFALE_24H = int(os.environ.get("ANTISPAM_RAFALE_24H", 5))
+ANTISPAM_NOUVEAU_COMPTE_MAX = int(os.environ.get("ANTISPAM_NOUVEAU_COMPTE_MAX", 3))
+ANTISPAM_MAX_LIENS_DESCRIPTION = int(os.environ.get("ANTISPAM_MAX_LIENS_DESCRIPTION", 2))
+ANTISPAM_SEUIL_SIGNALEMENTS = int(os.environ.get("ANTISPAM_SEUIL_SIGNALEMENTS", 5))
+# Planchers de prix par catégorie (règle AS7), en USD.
+import json as _json
+
+ANTISPAM_PRIX_PLANCHERS_USD = _json.loads(
+    os.environ.get("ANTISPAM_PRIX_PLANCHERS_USD", '{"vehicules": 100, "immobilier": 20}')
+)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

@@ -16,6 +16,7 @@ urlpatterns = [
     path("", include("annonces.urls")),
     path("", include("messagerie.urls")),
     path("", include("avis.urls")),
+    path("", include("moderation.urls")),
     path("", include("core.urls")),
 ]
 

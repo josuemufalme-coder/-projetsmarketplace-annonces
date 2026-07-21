@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Signaler cette annonce" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Signaler cette annonce" %}</h1>
+  <p style="color:#667;margin-bottom:1rem;">
+    « {{ annonce.titre }} » — {{ annonce.commune.nom }}
+  </p>
+  <form method="post">
+    {% csrf_token %}
+    <p>
+      <label for="id_motif">{% translate "Motif" %}</label>
+      <select id="id_motif" name="motif" required>
+        <option value="">---------</option>
+        {% for motif in motifs %}<option value="{{ motif.pk }}">{{ motif.nom }}</option>{% endfor %}
+      </select>
+    </p>
+    <p>
+      <label for="id_commentaire">{% translate "Précisions (facultatif)" %}</label>
+      <textarea id="id_commentaire" name="commentaire" rows="3"></textarea>
+    </p>
+    <button type="submit" class="btn btn-vert">{% translate "Envoyer le signalement" %}</button>
+  </form>
+</div>
+{% endblock %}

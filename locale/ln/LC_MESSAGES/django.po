@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 12:53+0100\n"
+"POT-Creation-Date: 2026-07-21 12:58+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: ln\n"
@@ -56,6 +56,14 @@ msgstr "Tia numero na yo to pona messagerie ya kati."
 #: annonces/forms.py:110
 msgid "Ajoutez au moins une photo pour cette catégorie."
 msgstr "Bakisa ata foto moko mpo na catégorie oyo."
+
+#: annonces/forms.py:119
+msgid ""
+"Vous avez déjà une annonce identique en ligne. Renouvelez-la plutôt que de "
+"la republier."
+msgstr ""
+"Ozali déjà na annonce ndenge moko. Zongisa yango sika, kotia yango lisusu "
+"te."
 
 #: annonces/views.py:127
 msgid "Votre annonce est publiée !"
@@ -129,15 +137,15 @@ msgstr "Boyei malamu na Kongo Market !"
 msgid "Profil mis à jour."
 msgstr "Profil ebongisami."
 
-#: config/settings.py:110
+#: config/settings.py:111
 msgid "Français"
 msgstr "Falansé"
 
-#: config/settings.py:111
+#: config/settings.py:112
 msgid "Lingala"
 msgstr "Lingála"
 
-#: config/settings.py:112
+#: config/settings.py:113
 msgid "Anglais"
 msgstr "Lingelesi"
 
@@ -164,6 +172,16 @@ msgstr ""
 #: messagerie/views.py:34
 msgid "Message envoyé au vendeur."
 msgstr "Message etindami na motekisi."
+
+#: moderation/views.py:26
+msgid "Merci, votre signalement sera examiné par notre équipe."
+msgstr "Matondo, equipe na biso ekotala signalement na yo."
+
+#: moderation/views.py:29
+#, fuzzy
+#| msgid "Choisissez une note de 1 à 5 étoiles."
+msgid "Choisissez un motif de signalement."
+msgstr "Pona note kobanda na 1 kino na 5 minzoto."
 
 #: templates/annonces/_carte.html:6
 msgid "Sans photo"
@@ -225,6 +243,13 @@ msgstr "Kokota"
 #: templates/annonces/detail.html:94
 msgid "Gérer mes annonces"
 msgstr "Kobongisa ba annonces na ngai"
+
+#: templates/annonces/detail.html:97 templates/moderation/signaler.html:4
+#: templates/moderation/signaler.html:8
+#, fuzzy
+#| msgid "Publier une annonce"
+msgid "Signaler cette annonce"
+msgstr "Kotia annonce"
 
 #: templates/annonces/indisponible.html:4
 #: templates/annonces/indisponible.html:8
@@ -528,6 +553,18 @@ msgstr "na"
 #| msgid "Votre numéro de téléphone"
 msgid "Votre réponse"
 msgstr "Numero ya telefone na yo"
+
+#: templates/moderation/signaler.html:15
+msgid "Motif"
+msgstr "Ntina"
+
+#: templates/moderation/signaler.html:22
+msgid "Précisions (facultatif)"
+msgstr "Makambo mosusu (esengeli te)"
+
+#: templates/moderation/signaler.html:25
+msgid "Envoyer le signalement"
+msgstr "Kotinda signalement"
 
 #~ msgid ""
 #~ "Ce vendeur est joignable par la messagerie interne (bientôt disponible)."

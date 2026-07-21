@@ -109,6 +109,16 @@ class AnnonceForm(forms.ModelForm):
         if self.categorie.photos_obligatoires and not self.files.getlist("photos"):
             self.add_error("photos", _("Ajoutez au moins une photo pour cette catégorie."))
 
+        # Règle AS3 (Annexe A) : refus d'une annonce strictement identique.
+        from moderation.antispam import est_doublon_strict
+
+        if donnees.get("titre") and donnees.get("description"):
+            if est_doublon_strict(self.utilisateur, donnees["titre"], donnees["description"]):
+                self.add_error(
+                    "titre",
+                    _("Vous avez déjà une annonce identique en ligne. Renouvelez-la plutôt que de la republier."),
+                )
+
         return donnees
 
     def valeurs_attributs(self):
@@ -136,4 +146,9 @@ class AnnonceForm(forms.ModelForm):
             if telephone and telephone != self.utilisateur.telephone:
                 self.utilisateur.telephone = telephone
                 self.utilisateur.save(update_fields=["telephone"])
+            # Analyse anti-spam à la publication (décision Q2) : marque
+            # pour revue humaine, ne bloque jamais ici.
+            from moderation.antispam import evaluer_annonce
+
+            evaluer_annonce(annonce)
         return annonce

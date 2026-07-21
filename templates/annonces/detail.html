@@ -93,6 +93,8 @@
   <div class="actions-vendeur">
     <a href="{% url 'annonces:mes_annonces' %}">{% translate "Gérer mes annonces" %}</a>
   </div>
+  {% else %}
+  <p style="margin-top:1rem;"><a class="lien-discret" href="{% url 'moderation:signaler' annonce.pk %}">⚑ {% translate "Signaler cette annonce" %}</a></p>
   {% endif %}
 </article>
 {% endblock %}
