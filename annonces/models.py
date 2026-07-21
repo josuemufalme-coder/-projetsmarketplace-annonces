@@ -180,13 +180,47 @@ class Annonce(models.Model):
 
 
 class Photo(models.Model):
+    """Photo d'annonce, redimensionnée à l'envoi (SRS §5.2) :
+    - image : version d'affichage (côté max configurable, JPEG) ;
+    - vignette : version légère pour les listes, cruciale en 3G."""
+
     annonce = models.ForeignKey(Annonce, on_delete=models.CASCADE, related_name="photos")
     image = models.ImageField(upload_to="annonces/%Y/%m/")
+    vignette = models.ImageField(upload_to="annonces/%Y/%m/vignettes/", blank=True)
     ordre = models.PositiveSmallIntegerField(default=1)
 
     class Meta:
         verbose_name = "photo"
         ordering = ["ordre"]
+
+    def save(self, *args, **kwargs):
+        if not self.pk and self.image and not self.vignette:
+            self._traiter_image()
+        super().save(*args, **kwargs)
+
+    def _traiter_image(self):
+        import io
+        from pathlib import Path
+
+        from django.conf import settings as reglages
+        from django.core.files.base import ContentFile
+        from PIL import Image, ImageOps
+
+        originale = Image.open(self.image)
+        originale = ImageOps.exif_transpose(originale).convert("RGB")
+        racine = Path(self.image.name).stem[:60] or "photo"
+
+        def en_jpeg(cote_max):
+            copie = originale.copy()
+            copie.thumbnail((cote_max, cote_max))
+            tampon = io.BytesIO()
+            copie.save(tampon, format="JPEG", quality=82, optimize=True)
+            return ContentFile(tampon.getvalue())
+
+        self.image = en_jpeg(reglages.PHOTO_COTE_MAX)
+        self.image.name = f"{racine}.jpg"
+        self.vignette = en_jpeg(reglages.PHOTO_VIGNETTE_MAX)
+        self.vignette.name = f"{racine}-min.jpg"
 
 
 class ClicAffichageNumero(models.Model):

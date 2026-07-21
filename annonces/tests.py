@@ -57,7 +57,7 @@ from django.utils import timezone
 from comptes.models import Utilisateur
 from geo.models import Commune
 
-from .models import Annonce, ClicAffichageNumero
+from .models import Annonce, ClicAffichageNumero, Photo
 
 # GIF 1×1 valide, suffisant pour tester l'envoi de photos.
 GIF_MINUSCULE = (
@@ -256,3 +256,42 @@ class CycleDeVieTests(BaseAnnonceTests):
         self.client.login(username="autre@example.com", password="kin2026!solide")
         reponse = self.client.post(reverse("annonces:retirer", args=[annonce.pk]))
         self.assertEqual(reponse.status_code, 404)
+
+
+class RedimensionnementPhotosTests(BaseAnnonceTests):
+    """Étape 12 : les photos sont réduites et une vignette est générée (SRS §5.2)."""
+
+    def _photo_haute_resolution(self):
+        import io
+
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        from PIL import Image
+
+        image = Image.new("RGB", (3000, 2000), (10, 120, 80))
+        tampon = io.BytesIO()
+        image.save(tampon, format="PNG")
+        return SimpleUploadedFile("grande-photo.png", tampon.getvalue(), content_type="image/png")
+
+    def test_image_reduite_et_vignette_creee(self):
+        from PIL import Image
+
+        annonce = self.creer_annonce()
+        photo = Photo(annonce=annonce, ordre=1)
+        photo.image = self._photo_haute_resolution()
+        photo.save()
+
+        avec_image = Image.open(photo.image)
+        self.assertLessEqual(max(avec_image.size), 1600)
+        self.assertEqual(avec_image.format, "JPEG")
+        self.assertTrue(photo.vignette)
+        avec_vignette = Image.open(photo.vignette)
+        self.assertLessEqual(max(avec_vignette.size), 500)
+        self.assertLess(photo.vignette.size, photo.image.size)
+
+    def test_la_liste_utilise_la_vignette(self):
+        annonce = self.creer_annonce()
+        photo = Photo(annonce=annonce, ordre=1)
+        photo.image = self._photo_haute_resolution()
+        photo.save()
+        reponse = self.client.get(reverse("annonces:liste"))
+        self.assertContains(reponse, "vignettes/")

@@ -2,7 +2,7 @@
 <a class="carte-annonce" href="{{ annonce.get_absolute_url }}">
   <div class="carte-photo">
     {% with photo=annonce.photos.all|first %}
-    {% if photo %}<img src="{{ photo.image.url }}" alt="{{ annonce.titre }}" loading="lazy">
+    {% if photo %}<img src="{% if photo.vignette %}{{ photo.vignette.url }}{% else %}{{ photo.image.url }}{% endif %}" alt="{{ annonce.titre }}" loading="lazy">
     {% else %}<span class="sans-photo">{% translate "Sans photo" %}</span>{% endif %}
     {% endwith %}
   </div>

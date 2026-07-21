@@ -156,9 +156,34 @@ STORAGES = {
 }
 
 # Fichiers envoyés par les utilisateurs (photos d'annonces).
-# En local : disque. En production : stockage objet S3/R2 (étape déploiement).
+# En local : disque. En production : Cloudflare R2 (S3), activé dès que
+# les variables R2_* sont définies — aucun changement de code.
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# Tailles maximales des photos (côté le plus long, en pixels).
+PHOTO_COTE_MAX = int(os.environ.get("PHOTO_COTE_MAX", 1600))
+PHOTO_VIGNETTE_MAX = int(os.environ.get("PHOTO_VIGNETTE_MAX", 500))
+
+_R2_BUCKET = os.environ.get("R2_BUCKET", "")
+if _R2_BUCKET:
+    _options_r2 = {
+        "bucket_name": _R2_BUCKET,
+        "endpoint_url": os.environ["R2_ENDPOINT"],
+        "access_key": os.environ["R2_ACCESS_KEY_ID"],
+        "secret_key": os.environ["R2_SECRET_ACCESS_KEY"],
+        "querystring_auth": False,
+        "default_acl": None,
+        "file_overwrite": False,
+        "location": "media",
+    }
+    # Domaine public du bucket (pub-….r2.dev ou media.<domaine>).
+    if os.environ.get("R2_PUBLIC_HOST"):
+        _options_r2["custom_domain"] = os.environ["R2_PUBLIC_HOST"]
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": _options_r2,
+    }
 
 # Paramètres métier des annonces (SRS §3.3, décisions Q7 et Q10) —
 # configurables sans redéploiement via variables d'environnement.
