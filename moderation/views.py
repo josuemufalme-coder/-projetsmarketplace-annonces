@@ -3,11 +3,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 
 from annonces.models import Annonce
+from core.ratelimit import limiter_debit
 
 from .antispam import evaluer_signalements
 from .models import MotifSignalement, Signalement
 
 
+@limiter_debit("signalement")
 def signaler(request, pk):
     """Bouton « Signaler » — SRS §3.7, accessible aussi aux visiteurs."""
     annonce = get_object_or_404(Annonce, pk=pk)

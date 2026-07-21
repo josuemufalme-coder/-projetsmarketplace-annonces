@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from comptes.models import Utilisateur
+from core.ratelimit import limiter_debit
 
 from .forms import AvisForm
 from .models import Avis, peut_laisser_avis
@@ -12,6 +13,7 @@ from .models import Avis, peut_laisser_avis
 
 @login_required
 @require_POST
+@limiter_debit("avis")
 def laisser_avis(request, pk):
     vendeur = get_object_or_404(Utilisateur, pk=pk, is_active=True)
     if not peut_laisser_avis(request.user, vendeur):

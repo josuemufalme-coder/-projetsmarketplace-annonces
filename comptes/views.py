@@ -4,9 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 
+from core.ratelimit import limiter_debit
+
 from .forms import InscriptionForm, ProfilForm
 
 
+@limiter_debit("inscription")
 def inscription(request):
     if request.user.is_authenticated:
         return redirect("core:home")

@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from core.ratelimit import limiter_debit
 from geo.models import Commune
 
 from .forms import AnnonceForm
@@ -85,6 +86,7 @@ def detail(request, pk, slug):
 
 @login_required
 @require_POST
+@limiter_debit("numero")
 def afficher_numero(request, pk):
     """Décision Q9 : le numéro n'apparaît qu'après un clic authentifié et journalisé."""
     annonce = get_object_or_404(
@@ -114,6 +116,7 @@ def choisir_categorie(request):
 
 
 @login_required
+@limiter_debit("publication")
 def publier(request, slug):
     categorie = get_object_or_404(Categorie, slug=slug, actif=True)
     form = AnnonceForm(

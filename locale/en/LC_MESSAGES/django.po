@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 13:04+0100\n"
+"POT-Creation-Date: 2026-07-21 13:07+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: en\n"
@@ -63,19 +63,19 @@ msgstr ""
 "You already have an identical ad online. Renew it instead of posting it "
 "again."
 
-#: annonces/views.py:127
+#: annonces/views.py:130
 msgid "Votre annonce est publiée !"
 msgstr "Your ad is now live!"
 
-#: annonces/views.py:150
+#: annonces/views.py:153
 msgid "Annonce renouvelée : elle repart en tête pour 30 jours."
 msgstr "Ad renewed: it goes back to the top for 30 days."
 
-#: annonces/views.py:152
+#: annonces/views.py:155
 msgid "Cette annonce ne peut pas encore être renouvelée."
 msgstr "This ad cannot be renewed yet."
 
-#: annonces/views.py:162
+#: annonces/views.py:165
 msgid "Annonce retirée."
 msgstr "Ad removed."
 
@@ -89,7 +89,7 @@ msgstr "Your phone number"
 msgid "Votre commentaire"
 msgstr "Your comment"
 
-#: avis/views.py:20
+#: avis/views.py:22
 #, fuzzy
 #| msgid "Connectez-vous pour voir le numéro du vendeur."
 msgid ""
@@ -97,11 +97,11 @@ msgid ""
 "avis."
 msgstr "Log in to see the seller's phone number."
 
-#: avis/views.py:30
+#: avis/views.py:32
 msgid "Merci pour votre avis !"
 msgstr "Thank you for your review!"
 
-#: avis/views.py:32
+#: avis/views.py:34
 msgid "Choisissez une note de 1 à 5 étoiles."
 msgstr "Choose a rating from 1 to 5 stars."
 
@@ -127,11 +127,11 @@ msgstr "Shown on your ads only if you choose the “displayed number” mode."
 msgid "commune"
 msgstr "commune"
 
-#: comptes/views.py:17
+#: comptes/views.py:20
 msgid "Bienvenue sur Kongo Market !"
 msgstr "Welcome to Kongo Market!"
 
-#: comptes/views.py:27
+#: comptes/views.py:30
 msgid "Profil mis à jour."
 msgstr "Profile updated."
 
@@ -167,19 +167,31 @@ msgstr ""
 "\n"
 "Reply here: %(url)s"
 
-#: messagerie/views.py:34
+#: messagerie/views.py:36
 msgid "Message envoyé au vendeur."
 msgstr "Message sent to the seller."
 
-#: moderation/views.py:26
+#: moderation/views.py:28
 msgid "Merci, votre signalement sera examiné par notre équipe."
 msgstr "Thank you, your report will be reviewed by our team."
 
-#: moderation/views.py:29
+#: moderation/views.py:31
 #, fuzzy
 #| msgid "Choisissez une note de 1 à 5 étoiles."
 msgid "Choisissez un motif de signalement."
 msgstr "Choose a rating from 1 to 5 stars."
+
+#: templates/429.html:4 templates/429.html:8
+msgid "Trop de tentatives"
+msgstr "Too many attempts"
+
+#: templates/429.html:9
+msgid ""
+"Vous avez effectué trop d'actions en peu de temps. Patientez quelques "
+"minutes puis réessayez."
+msgstr ""
+"You performed too many actions in a short time. Wait a few minutes and try "
+"again."
 
 #: templates/annonces/_carte.html:6
 msgid "Sans photo"

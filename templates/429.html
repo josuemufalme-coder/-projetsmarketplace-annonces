@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Trop de tentatives" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Trop de tentatives" %}</h1>
+  <p>{% translate "Vous avez effectué trop d'actions en peu de temps. Patientez quelques minutes puis réessayez." %}</p>
+</div>
+{% endblock %}

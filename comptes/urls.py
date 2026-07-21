@@ -1,6 +1,8 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path, reverse_lazy
 
+from core.ratelimit import limiter_debit
+
 from . import views
 
 app_name = "comptes"
@@ -9,7 +11,9 @@ urlpatterns = [
     path("inscription/", views.inscription, name="inscription"),
     path(
         "connexion/",
-        auth_views.LoginView.as_view(template_name="comptes/connexion.html"),
+        limiter_debit("connexion")(
+            auth_views.LoginView.as_view(template_name="comptes/connexion.html")
+        ),
         name="connexion",
     ),
     path("deconnexion/", auth_views.LogoutView.as_view(), name="deconnexion"),
@@ -18,12 +22,13 @@ urlpatterns = [
     # Réinitialisation de mot de passe par e-mail (vues Django standard).
     path(
         "mdp-oublie/",
-        auth_views.PasswordResetView.as_view(
+        limiter_debit("mdp_oublie")(
+            auth_views.PasswordResetView.as_view(
             template_name="comptes/mdp_oublie.html",
             email_template_name="comptes/mdp_email.txt",
             subject_template_name="comptes/mdp_sujet.txt",
             success_url=reverse_lazy("comptes:mdp_envoye"),
-        ),
+        )),
         name="mdp_oublie",
     ),
     path(

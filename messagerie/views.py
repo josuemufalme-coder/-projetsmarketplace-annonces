@@ -6,6 +6,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from annonces.models import Annonce
+from core.ratelimit import limiter_debit
 
 from .models import Conversation, Message
 from .services import notifier_nouveau_message
@@ -13,6 +14,7 @@ from .services import notifier_nouveau_message
 
 @login_required
 @require_POST
+@limiter_debit("message")
 def contacter(request, pk):
     """Premier message d'un acheteur depuis la page d'une annonce."""
     annonce = get_object_or_404(Annonce, pk=pk)
@@ -53,6 +55,7 @@ def boite(request):
 
 
 @login_required
+@limiter_debit("message")
 def conversation(request, pk):
     fil = get_object_or_404(
         Conversation.objects.select_related("annonce", "annonce__vendeur", "acheteur"), pk=pk

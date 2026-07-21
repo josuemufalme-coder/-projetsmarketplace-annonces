@@ -165,6 +165,24 @@ ANNONCE_DUREE_JOURS = int(os.environ.get("ANNONCE_DUREE_JOURS", 30))
 ANNONCE_RENOUVELLEMENT_JOURS = int(os.environ.get("ANNONCE_RENOUVELLEMENT_JOURS", 7))
 ANNONCE_MAX_PHOTOS = int(os.environ.get("ANNONCE_MAX_PHOTOS", 6))
 
+# Limitation de débit (SRS §5.3) — format « nombre/secondes ».
+def _limite_debit(nom, defaut):
+    brut = os.environ.get(f"RATELIMIT_{nom}", defaut)
+    nombre, fenetre = brut.split("/")
+    return (int(nombre), int(fenetre))
+
+
+RATE_LIMITS = {
+    "inscription": _limite_debit("INSCRIPTION", "5/3600"),      # 5 comptes/h par IP
+    "connexion": _limite_debit("CONNEXION", "10/900"),          # 10 essais/15 min
+    "mdp_oublie": _limite_debit("MDP_OUBLIE", "5/3600"),        # 5 demandes/h
+    "publication": _limite_debit("PUBLICATION", "15/86400"),    # 15 annonces/24 h (Annexe A, AS1)
+    "message": _limite_debit("MESSAGE", "60/3600"),             # 60 messages/h
+    "numero": _limite_debit("NUMERO", "30/3600"),               # 30 clics « numéro »/h
+    "signalement": _limite_debit("SIGNALEMENT", "10/3600"),     # 10 signalements/h
+    "avis": _limite_debit("AVIS", "10/86400"),                  # 10 avis/24 h
+}
+
 # Seuils des règles anti-spam (Annexe A du cahier des charges).
 ANTISPAM_RAFALE_24H = int(os.environ.get("ANTISPAM_RAFALE_24H", 5))
 ANTISPAM_NOUVEAU_COMPTE_MAX = int(os.environ.get("ANTISPAM_NOUVEAU_COMPTE_MAX", 3))

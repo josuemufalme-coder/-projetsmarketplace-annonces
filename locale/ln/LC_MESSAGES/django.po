@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 13:04+0100\n"
+"POT-Creation-Date: 2026-07-21 13:07+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: ln\n"
@@ -65,19 +65,19 @@ msgstr ""
 "Ozali déjà na annonce ndenge moko. Zongisa yango sika, kotia yango lisusu "
 "te."
 
-#: annonces/views.py:127
+#: annonces/views.py:130
 msgid "Votre annonce est publiée !"
 msgstr "Annonce na yo ebimi !"
 
-#: annonces/views.py:150
+#: annonces/views.py:153
 msgid "Annonce renouvelée : elle repart en tête pour 30 jours."
 msgstr "Annonce ezongi sika : ekozala liboso mikolo 30."
 
-#: annonces/views.py:152
+#: annonces/views.py:155
 msgid "Cette annonce ne peut pas encore être renouvelée."
 msgstr "Annonce oyo ekoki naino kozongisama sika te."
 
-#: annonces/views.py:162
+#: annonces/views.py:165
 msgid "Annonce retirée."
 msgstr "Annonce elongolami."
 
@@ -91,7 +91,7 @@ msgstr "Numero ya telefone na yo"
 msgid "Votre commentaire"
 msgstr "Maloba na yo"
 
-#: avis/views.py:20
+#: avis/views.py:22
 #, fuzzy
 #| msgid "Connectez-vous pour voir le numéro du vendeur."
 msgid ""
@@ -99,11 +99,11 @@ msgid ""
 "avis."
 msgstr "Kota na konti mpo na komona numero ya motekisi."
 
-#: avis/views.py:30
+#: avis/views.py:32
 msgid "Merci pour votre avis !"
 msgstr "Matondo mpo na avis na yo !"
 
-#: avis/views.py:32
+#: avis/views.py:34
 msgid "Choisissez une note de 1 à 5 étoiles."
 msgstr "Pona note kobanda na 1 kino na 5 minzoto."
 
@@ -129,11 +129,11 @@ msgstr "Ekomonana na ba annonces na yo kaka soki oponi « kolakisa numero »."
 msgid "commune"
 msgstr "komini"
 
-#: comptes/views.py:17
+#: comptes/views.py:20
 msgid "Bienvenue sur Kongo Market !"
 msgstr "Boyei malamu na Kongo Market !"
 
-#: comptes/views.py:27
+#: comptes/views.py:30
 msgid "Profil mis à jour."
 msgstr "Profil ebongisami."
 
@@ -169,19 +169,29 @@ msgstr ""
 "\n"
 "Yanola awa : %(url)s"
 
-#: messagerie/views.py:34
+#: messagerie/views.py:36
 msgid "Message envoyé au vendeur."
 msgstr "Message etindami na motekisi."
 
-#: moderation/views.py:26
+#: moderation/views.py:28
 msgid "Merci, votre signalement sera examiné par notre équipe."
 msgstr "Matondo, equipe na biso ekotala signalement na yo."
 
-#: moderation/views.py:29
+#: moderation/views.py:31
 #, fuzzy
 #| msgid "Choisissez une note de 1 à 5 étoiles."
 msgid "Choisissez un motif de signalement."
 msgstr "Pona note kobanda na 1 kino na 5 minzoto."
+
+#: templates/429.html:4 templates/429.html:8
+msgid "Trop de tentatives"
+msgstr "Komeka mingi koleka"
+
+#: templates/429.html:9
+msgid ""
+"Vous avez effectué trop d'actions en peu de temps. Patientez quelques "
+"minutes puis réessayez."
+msgstr "Osali makambo mingi na tango moke. Zela mwa minuti mpe meka lisusu."
 
 #: templates/annonces/_carte.html:6
 msgid "Sans photo"
