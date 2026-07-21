@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "annonces",
     "comptes",
     "messagerie",
+    "avis",
 ]
 
 AUTH_USER_MODEL = "comptes.Utilisateur"

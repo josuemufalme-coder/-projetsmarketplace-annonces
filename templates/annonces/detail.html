@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n etoiles %}
 
 {% block title %}{{ annonce.titre }} — Kongo Market{% endblock %}
 
@@ -52,8 +52,13 @@
   <p class="detail-description">{{ annonce.description|linebreaks }}</p>
 
   <div class="detail-vendeur carte">
-    <p><strong>{{ annonce.vendeur.nom_affichage }}</strong>
-    {% if annonce.vendeur.commune %} · {{ annonce.vendeur.commune.nom }}{% endif %}</p>
+    <p>
+      <a href="{% url 'comptes:vendeur' annonce.vendeur.pk %}"><strong>{{ annonce.vendeur.nom_affichage }}</strong></a>
+      {% if annonce.vendeur.commune %} · {{ annonce.vendeur.commune.nom }}{% endif %}
+      {% with moyenne=annonce.vendeur.note_moyenne %}
+      {% if moyenne %} · <span class="etoiles">{{ moyenne|etoiles }}</span> {{ moyenne|floatformat:1 }}/5{% endif %}
+      {% endwith %}
+    </p>
 
     {% if annonce.contact == "telephone" %}
       {% if numero_visible %}

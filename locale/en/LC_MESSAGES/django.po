@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 12:50+0100\n"
+"POT-Creation-Date: 2026-07-21 12:53+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: en\n"
@@ -71,6 +71,32 @@ msgstr "This ad cannot be renewed yet."
 msgid "Annonce retirée."
 msgstr "Ad removed."
 
+#: avis/forms.py:11
+#, fuzzy
+#| msgid "Votre numéro de téléphone"
+msgid "Votre note"
+msgstr "Your phone number"
+
+#: avis/forms.py:11
+msgid "Votre commentaire"
+msgstr "Your comment"
+
+#: avis/views.py:20
+#, fuzzy
+#| msgid "Connectez-vous pour voir le numéro du vendeur."
+msgid ""
+"Vous devez d'abord contacter ce vendeur (numéro ou message) pour laisser un "
+"avis."
+msgstr "Log in to see the seller's phone number."
+
+#: avis/views.py:30
+msgid "Merci pour votre avis !"
+msgstr "Thank you for your review!"
+
+#: avis/views.py:32
+msgid "Choisissez une note de 1 à 5 étoiles."
+msgstr "Choose a rating from 1 to 5 stars."
+
 #: comptes/models.py:45
 msgid "adresse e-mail"
 msgstr "email address"
@@ -101,15 +127,15 @@ msgstr "Welcome to Kongo Market!"
 msgid "Profil mis à jour."
 msgstr "Profile updated."
 
-#: config/settings.py:109
+#: config/settings.py:110
 msgid "Français"
 msgstr "French"
 
-#: config/settings.py:110
+#: config/settings.py:111
 msgid "Lingala"
 msgstr "Lingala"
 
-#: config/settings.py:111
+#: config/settings.py:112
 msgid "Anglais"
 msgstr "English"
 
@@ -162,39 +188,39 @@ msgstr "This ad has expired."
 msgid "publiée le %(date)s"
 msgstr "posted on %(date)s"
 
-#: templates/annonces/detail.html:64
+#: templates/annonces/detail.html:69
 msgid "Afficher le numéro"
 msgstr "Show phone number"
 
-#: templates/annonces/detail.html:67
+#: templates/annonces/detail.html:72
 msgid "Connectez-vous pour voir le numéro du vendeur."
 msgstr "Log in to see the seller's phone number."
 
-#: templates/annonces/detail.html:75
+#: templates/annonces/detail.html:80
 msgid "Envoyer un message au vendeur"
 msgstr "Send a message to the seller"
 
-#: templates/annonces/detail.html:76
+#: templates/annonces/detail.html:81
 msgid "Bonjour, votre annonce m’intéresse…"
 msgstr "Hello, I'm interested in your ad…"
 
-#: templates/annonces/detail.html:78 templates/messagerie/conversation.html:30
+#: templates/annonces/detail.html:83 templates/messagerie/conversation.html:30
 msgid "Envoyer"
 msgstr "Send"
 
-#: templates/annonces/detail.html:81
+#: templates/annonces/detail.html:86
 #, fuzzy
 #| msgid "Connectez-vous pour voir le numéro du vendeur."
 msgid "Connectez-vous pour contacter ce vendeur par la messagerie interne."
 msgstr "Log in to see the seller's phone number."
 
-#: templates/annonces/detail.html:82 templates/base.html:26
+#: templates/annonces/detail.html:87 templates/base.html:26
 #: templates/comptes/connexion.html:4 templates/comptes/connexion.html:8
 #: templates/comptes/inscription.html:18
 msgid "Connexion"
 msgstr "Log in"
 
-#: templates/annonces/detail.html:89
+#: templates/annonces/detail.html:94
 msgid "Gérer mes annonces"
 msgstr "Manage my ads"
 
@@ -393,6 +419,65 @@ msgstr "My profile"
 #: templates/comptes/profil.html:13
 msgid "Enregistrer"
 msgstr "Save"
+
+#: templates/comptes/vendeur.html:11
+#, fuzzy, python-format
+#| msgid "publiée le %(date)s"
+msgid "membre depuis %(date)s"
+msgstr "posted on %(date)s"
+
+#: templates/comptes/vendeur.html:17
+#, python-format
+msgid "%(total)s avis"
+msgid_plural "%(total)s avis"
+msgstr[0] "%(total)s review"
+msgstr[1] "%(total)s reviews"
+
+#: templates/comptes/vendeur.html:20
+#, fuzzy
+#| msgid "Pas encore de compte ?"
+msgid "Pas encore d'avis."
+msgstr "No account yet?"
+
+#: templates/comptes/vendeur.html:24
+#, fuzzy
+#| msgid "Annonces récentes"
+msgid "Annonces en ligne"
+msgstr "Recent ads"
+
+#: templates/comptes/vendeur.html:30
+msgid "Aucune annonce en ligne actuellement."
+msgstr "No ads online right now."
+
+#: templates/comptes/vendeur.html:33
+msgid "Avis"
+msgstr "Reviews"
+
+#: templates/comptes/vendeur.html:37
+msgid "Modifier mon avis"
+msgstr "Edit my review"
+
+#: templates/comptes/vendeur.html:37
+msgid "Laisser un avis"
+msgstr "Leave a review"
+
+#: templates/comptes/vendeur.html:39
+#, fuzzy
+#| msgid "Publier une annonce"
+msgid "Publier mon avis"
+msgstr "Post an ad"
+
+#: templates/comptes/vendeur.html:43
+msgid ""
+"Vous pourrez laisser un avis après avoir contacté ce vendeur (numéro affiché"
+" ou message)."
+msgstr ""
+"You will be able to leave a review after contacting this seller (shown "
+"number or message)."
+
+#: templates/comptes/vendeur.html:54
+msgid "Ce vendeur n'a pas encore reçu d'avis."
+msgstr "This seller has not received any reviews yet."
 
 #: templates/core/home.html:8
 #, fuzzy

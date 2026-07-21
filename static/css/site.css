@@ -196,3 +196,7 @@ form ul { list-style-position: inside; font-size: 0.85rem; color: var(--gris); }
 .bulle.moi { align-self: flex-end; background: var(--vert); color: #fff; }
 .bulle.moi .carte-meta { color: #cfe0d8; }
 .bulle.autre { align-self: flex-start; background: #fff; border: 1px solid var(--bord); }
+
+/* Avis */
+.etoiles { color: var(--jaune); letter-spacing: 0.1em; }
+.note-vendeur { font-weight: 600; margin-top: 0.4rem; }

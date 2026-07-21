@@ -75,3 +75,13 @@ class Utilisateur(AbstractUser):
 
     def __str__(self):
         return self.nom_affichage or self.email
+
+    @property
+    def note_moyenne(self):
+        from django.db.models import Avg
+
+        return self.avis_recus.aggregate(moyenne=Avg("note"))["moyenne"]
+
+    @property
+    def nb_avis(self):
+        return self.avis_recus.count()

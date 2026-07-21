@@ -14,4 +14,5 @@ urlpatterns = [
     ),
     path("deconnexion/", auth_views.LogoutView.as_view(), name="deconnexion"),
     path("profil/", views.profil, name="profil"),
+    path("vendeur/<int:pk>/", views.vendeur, name="vendeur"),
 ]

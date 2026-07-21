@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n etoiles %}
+
+{% block title %}{{ profil.nom_affichage }} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{{ profil.nom_affichage }}</h1>
+  <p class="carte-meta">
+    {% if profil.commune %}{{ profil.commune.nom }} · {% endif %}
+    {% blocktranslate with date=profil.date_joined|date:"F Y" %}membre depuis {{ date }}{% endblocktranslate %}
+  </p>
+  {% if statistiques.total %}
+  <p class="note-vendeur">
+    <span class="etoiles">{{ statistiques.moyenne|etoiles }}</span>
+    {{ statistiques.moyenne|floatformat:1 }}/5
+    · {% blocktranslate count total=statistiques.total %}{{ total }} avis{% plural %}{{ total }} avis{% endblocktranslate %}
+  </p>
+  {% else %}
+  <p class="carte-meta">{% translate "Pas encore d'avis." %}</p>
+  {% endif %}
+</div>
+
+<h2 class="titre-section">{% translate "Annonces en ligne" %}</h2>
+{% if annonces %}
+<div class="grille-annonces">
+  {% for annonce in annonces %}{% include "annonces/_carte.html" %}{% endfor %}
+</div>
+{% else %}
+<p class="vide">{% translate "Aucune annonce en ligne actuellement." %}</p>
+{% endif %}
+
+<h2 class="titre-section">{% translate "Avis" %}</h2>
+{% if user.is_authenticated and avis_autorise %}
+<form method="post" action="{% url 'avis:laisser' profil.pk %}" class="carte" style="margin-bottom:1rem;">
+  {% csrf_token %}
+  <p><strong>{% if mon_avis %}{% translate "Modifier mon avis" %}{% else %}{% translate "Laisser un avis" %}{% endif %}</strong></p>
+  {{ avis_form.as_p }}
+  <button type="submit" class="btn btn-vert">{% translate "Publier mon avis" %}</button>
+</form>
+{% elif user.is_authenticated and user != profil %}
+<p class="carte-meta" style="margin-bottom:1rem;">
+  {% translate "Vous pourrez laisser un avis après avoir contacté ce vendeur (numéro affiché ou message)." %}
+</p>
+{% endif %}
+
+{% for avis in liste_avis %}
+<div class="carte" style="margin-bottom:0.6rem;">
+  <p><span class="etoiles">{{ avis.note|etoiles }}</span> · <strong>{{ avis.auteur.nom_affichage }}</strong>
+    <span class="carte-meta">{{ avis.date|date:"j F Y" }}</span></p>
+  {% if avis.commentaire %}<p>{{ avis.commentaire|linebreaksbr }}</p>{% endif %}
+</div>
+{% empty %}
+<p class="vide">{% translate "Ce vendeur n'a pas encore reçu d'avis." %}</p>
+{% endfor %}
+{% endblock %}

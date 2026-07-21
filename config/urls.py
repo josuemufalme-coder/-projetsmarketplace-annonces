@@ -15,6 +15,7 @@ urlpatterns = [
     path("compte/", include("comptes.urls")),
     path("", include("annonces.urls")),
     path("", include("messagerie.urls")),
+    path("", include("avis.urls")),
     path("", include("core.urls")),
 ]
 

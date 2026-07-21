@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 12:50+0100\n"
+"POT-Creation-Date: 2026-07-21 12:53+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: ln\n"
@@ -73,6 +73,32 @@ msgstr "Annonce oyo ekoki naino kozongisama sika te."
 msgid "Annonce retirée."
 msgstr "Annonce elongolami."
 
+#: avis/forms.py:11
+#, fuzzy
+#| msgid "Votre numéro de téléphone"
+msgid "Votre note"
+msgstr "Numero ya telefone na yo"
+
+#: avis/forms.py:11
+msgid "Votre commentaire"
+msgstr "Maloba na yo"
+
+#: avis/views.py:20
+#, fuzzy
+#| msgid "Connectez-vous pour voir le numéro du vendeur."
+msgid ""
+"Vous devez d'abord contacter ce vendeur (numéro ou message) pour laisser un "
+"avis."
+msgstr "Kota na konti mpo na komona numero ya motekisi."
+
+#: avis/views.py:30
+msgid "Merci pour votre avis !"
+msgstr "Matondo mpo na avis na yo !"
+
+#: avis/views.py:32
+msgid "Choisissez une note de 1 à 5 étoiles."
+msgstr "Pona note kobanda na 1 kino na 5 minzoto."
+
 #: comptes/models.py:45
 msgid "adresse e-mail"
 msgstr "adresse e-mail"
@@ -103,15 +129,15 @@ msgstr "Boyei malamu na Kongo Market !"
 msgid "Profil mis à jour."
 msgstr "Profil ebongisami."
 
-#: config/settings.py:109
+#: config/settings.py:110
 msgid "Français"
 msgstr "Falansé"
 
-#: config/settings.py:110
+#: config/settings.py:111
 msgid "Lingala"
 msgstr "Lingála"
 
-#: config/settings.py:111
+#: config/settings.py:112
 msgid "Anglais"
 msgstr "Lingelesi"
 
@@ -164,39 +190,39 @@ msgstr "Annonce oyo esili tango."
 msgid "publiée le %(date)s"
 msgstr "ebimaki mokolo ya %(date)s"
 
-#: templates/annonces/detail.html:64
+#: templates/annonces/detail.html:69
 msgid "Afficher le numéro"
 msgstr "Lakisa numero"
 
-#: templates/annonces/detail.html:67
+#: templates/annonces/detail.html:72
 msgid "Connectez-vous pour voir le numéro du vendeur."
 msgstr "Kota na konti mpo na komona numero ya motekisi."
 
-#: templates/annonces/detail.html:75
+#: templates/annonces/detail.html:80
 msgid "Envoyer un message au vendeur"
 msgstr "Tinda message na motekisi"
 
-#: templates/annonces/detail.html:76
+#: templates/annonces/detail.html:81
 msgid "Bonjour, votre annonce m’intéresse…"
 msgstr "Mbote, annonce na yo esepelisi ngai…"
 
-#: templates/annonces/detail.html:78 templates/messagerie/conversation.html:30
+#: templates/annonces/detail.html:83 templates/messagerie/conversation.html:30
 msgid "Envoyer"
 msgstr "Kotinda"
 
-#: templates/annonces/detail.html:81
+#: templates/annonces/detail.html:86
 #, fuzzy
 #| msgid "Connectez-vous pour voir le numéro du vendeur."
 msgid "Connectez-vous pour contacter ce vendeur par la messagerie interne."
 msgstr "Kota na konti mpo na komona numero ya motekisi."
 
-#: templates/annonces/detail.html:82 templates/base.html:26
+#: templates/annonces/detail.html:87 templates/base.html:26
 #: templates/comptes/connexion.html:4 templates/comptes/connexion.html:8
 #: templates/comptes/inscription.html:18
 msgid "Connexion"
 msgstr "Kokota"
 
-#: templates/annonces/detail.html:89
+#: templates/annonces/detail.html:94
 msgid "Gérer mes annonces"
 msgstr "Kobongisa ba annonces na ngai"
 
@@ -397,6 +423,63 @@ msgstr "Profil na ngai"
 #: templates/comptes/profil.html:13
 msgid "Enregistrer"
 msgstr "Bomba"
+
+#: templates/comptes/vendeur.html:11
+#, fuzzy, python-format
+#| msgid "publiée le %(date)s"
+msgid "membre depuis %(date)s"
+msgstr "ebimaki mokolo ya %(date)s"
+
+#: templates/comptes/vendeur.html:17
+#, python-format
+msgid "%(total)s avis"
+msgid_plural "%(total)s avis"
+msgstr[0] "avis %(total)s"
+msgstr[1] "ba avis %(total)s"
+
+#: templates/comptes/vendeur.html:20
+#, fuzzy
+#| msgid "Pas encore de compte ?"
+msgid "Pas encore d'avis."
+msgstr "Ozali na konti te ?"
+
+#: templates/comptes/vendeur.html:24
+#, fuzzy
+#| msgid "Annonces récentes"
+msgid "Annonces en ligne"
+msgstr "Ba annonces ya sika"
+
+#: templates/comptes/vendeur.html:30
+msgid "Aucune annonce en ligne actuellement."
+msgstr "Annonce ezali sikoyo te."
+
+#: templates/comptes/vendeur.html:33
+msgid "Avis"
+msgstr "Ba avis"
+
+#: templates/comptes/vendeur.html:37
+msgid "Modifier mon avis"
+msgstr "Kobongola avis na ngai"
+
+#: templates/comptes/vendeur.html:37
+msgid "Laisser un avis"
+msgstr "Kotia avis"
+
+#: templates/comptes/vendeur.html:39
+#, fuzzy
+#| msgid "Publier une annonce"
+msgid "Publier mon avis"
+msgstr "Kotia annonce"
+
+#: templates/comptes/vendeur.html:43
+msgid ""
+"Vous pourrez laisser un avis après avoir contacté ce vendeur (numéro affiché"
+" ou message)."
+msgstr "Okokoka kotia avis sima ya kobenga to kokomela motekisi oyo."
+
+#: templates/comptes/vendeur.html:54
+msgid "Ce vendeur n'a pas encore reçu d'avis."
+msgstr "Motekisi oyo azwi naino avis te."
 
 #: templates/core/home.html:8
 #, fuzzy
