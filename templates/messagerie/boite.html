@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Messages" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<h1 class="titre-section">{% translate "Messages" %}</h1>
+{% if conversations %}
+{% for fil in conversations %}
+<a class="carte ligne-conversation" href="{% url 'messagerie:conversation' fil.pk %}">
+  <div>
+    <strong>{{ fil.annonce.titre }}</strong>
+    <p class="carte-meta">
+      {% if user == fil.acheteur %}{{ fil.annonce.vendeur.nom_affichage }}{% else %}{{ fil.acheteur.nom_affichage }}{% endif %}
+      {% with dernier=fil.messages.last %}{% if dernier %} · {{ dernier.texte|truncatechars:60 }}{% endif %}{% endwith %}
+    </p>
+  </div>
+  {% if fil.non_lus %}<span class="badge">{{ fil.non_lus }}</span>{% endif %}
+</a>
+{% endfor %}
+{% else %}
+<p class="vide">{% translate "Aucune conversation pour le moment." %}</p>
+{% endif %}
+{% endblock %}

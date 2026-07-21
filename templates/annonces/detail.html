@@ -68,7 +68,19 @@
       {% endif %}
       {% endif %}
     {% else %}
-      <p class="carte-meta">{% translate "Ce vendeur est joignable par la messagerie interne (bientôt disponible)." %}</p>
+      {% if user.is_authenticated and not est_vendeur %}
+      <form method="post" action="{% url 'messagerie:contacter' annonce.pk %}">
+        {% csrf_token %}
+        <p>
+          <label for="id_texte">{% translate "Envoyer un message au vendeur" %}</label>
+          <textarea id="id_texte" name="texte" rows="3" required placeholder="{% translate 'Bonjour, votre annonce m’intéresse…' %}"></textarea>
+        </p>
+        <button type="submit" class="btn btn-vert">{% translate "Envoyer" %}</button>
+      </form>
+      {% elif not user.is_authenticated %}
+      <p class="carte-meta">{% translate "Connectez-vous pour contacter ce vendeur par la messagerie interne." %}</p>
+      <a class="btn btn-vert" href="{% url 'comptes:connexion' %}?next={{ request.path }}">{% translate "Connexion" %}</a>
+      {% endif %}
     {% endif %}
   </div>
 

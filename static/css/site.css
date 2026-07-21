@@ -186,3 +186,13 @@ form ul { list-style-position: inside; font-size: 0.85rem; color: var(--gris); }
   .grille-annonces { grid-template-columns: repeat(2, 1fr); }
   .entete { justify-content: center; }
 }
+
+/* Messagerie */
+.ligne-conversation { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.6rem; color: var(--texte); }
+.ligne-conversation:hover { text-decoration: none; border-color: var(--vert); }
+.badge { background: var(--jaune); color: var(--vert); border-radius: 999px; padding: 0.1rem 0.6rem; font-weight: 700; font-size: 0.85rem; }
+.fil-messages { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0; }
+.bulle { max-width: 85%; border-radius: 12px; padding: 0.6rem 0.8rem; }
+.bulle.moi { align-self: flex-end; background: var(--vert); color: #fff; }
+.bulle.moi .carte-meta { color: #cfe0d8; }
+.bulle.autre { align-self: flex-start; background: #fff; border: 1px solid var(--bord); }

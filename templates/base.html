@@ -16,6 +16,7 @@
     <a class="btn btn-jaune" href="{% url 'annonces:publier' %}">{% translate "Publier une annonce" %}</a>
     {% if user.is_authenticated %}
       <a href="{% url 'annonces:mes_annonces' %}">{% translate "Mes annonces" %}</a>
+      <a href="{% url 'messagerie:boite' %}">{% translate "Messages" %}{% if nb_messages_non_lus %} <span class="badge">{{ nb_messages_non_lus }}</span>{% endif %}</a>
       <a href="{% url 'comptes:profil' %}">{{ user.nom_affichage }}</a>
       <form method="post" action="{% url 'comptes:deconnexion' %}" class="inline">
         {% csrf_token %}

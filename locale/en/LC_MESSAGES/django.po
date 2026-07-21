@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 12:44+0100\n"
+"POT-Creation-Date: 2026-07-21 12:50+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: en\n"
@@ -101,17 +101,41 @@ msgstr "Welcome to Kongo Market!"
 msgid "Profil mis à jour."
 msgstr "Profile updated."
 
-#: config/settings.py:107
+#: config/settings.py:109
 msgid "Français"
 msgstr "French"
 
-#: config/settings.py:108
+#: config/settings.py:110
 msgid "Lingala"
 msgstr "Lingala"
 
-#: config/settings.py:109
+#: config/settings.py:111
 msgid "Anglais"
 msgstr "English"
+
+#: messagerie/services.py:18
+#, python-format
+msgid "Nouveau message sur Kongo Market — %(annonce)s"
+msgstr "New message on Kongo Market — %(annonce)s"
+
+#: messagerie/services.py:21
+#, python-format
+msgid ""
+"%(expediteur)s vous a écrit au sujet de l'annonce « %(annonce)s ».\n"
+"\n"
+"%(texte)s\n"
+"\n"
+"Répondez ici : %(url)s"
+msgstr ""
+"%(expediteur)s wrote to you about the ad “%(annonce)s”.\n"
+"\n"
+"%(texte)s\n"
+"\n"
+"Reply here: %(url)s"
+
+#: messagerie/views.py:34
+msgid "Message envoyé au vendeur."
+msgstr "Message sent to the seller."
 
 #: templates/annonces/_carte.html:6
 msgid "Sans photo"
@@ -146,12 +170,31 @@ msgstr "Show phone number"
 msgid "Connectez-vous pour voir le numéro du vendeur."
 msgstr "Log in to see the seller's phone number."
 
-#: templates/annonces/detail.html:71
-msgid ""
-"Ce vendeur est joignable par la messagerie interne (bientôt disponible)."
-msgstr "This seller can be reached through internal messaging (coming soon)."
+#: templates/annonces/detail.html:75
+msgid "Envoyer un message au vendeur"
+msgstr "Send a message to the seller"
 
-#: templates/annonces/detail.html:77
+#: templates/annonces/detail.html:76
+msgid "Bonjour, votre annonce m’intéresse…"
+msgstr "Hello, I'm interested in your ad…"
+
+#: templates/annonces/detail.html:78 templates/messagerie/conversation.html:30
+msgid "Envoyer"
+msgstr "Send"
+
+#: templates/annonces/detail.html:81
+#, fuzzy
+#| msgid "Connectez-vous pour voir le numéro du vendeur."
+msgid "Connectez-vous pour contacter ce vendeur par la messagerie interne."
+msgstr "Log in to see the seller's phone number."
+
+#: templates/annonces/detail.html:82 templates/base.html:26
+#: templates/comptes/connexion.html:4 templates/comptes/connexion.html:8
+#: templates/comptes/inscription.html:18
+msgid "Connexion"
+msgstr "Log in"
+
+#: templates/annonces/detail.html:89
 msgid "Gérer mes annonces"
 msgstr "Manage my ads"
 
@@ -298,21 +341,21 @@ msgid ""
 msgstr ""
 "Classified ads in Kinshasa: real estate, vehicles, phones, jobs and more."
 
-#: templates/base.html:22
+#: templates/base.html:19 templates/messagerie/boite.html:4
+#: templates/messagerie/boite.html:7 templates/messagerie/conversation.html:4
+msgid "Messages"
+msgstr "Messages"
+
+#: templates/base.html:23
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:25 templates/comptes/connexion.html:4
-#: templates/comptes/connexion.html:8 templates/comptes/inscription.html:18
-msgid "Connexion"
-msgstr "Log in"
-
-#: templates/base.html:26 templates/comptes/connexion.html:18
+#: templates/base.html:27 templates/comptes/connexion.html:18
 #: templates/comptes/inscription.html:4 templates/comptes/inscription.html:8
 msgid "Créer un compte"
 msgstr "Create an account"
 
-#: templates/base.html:49 templates/core/home.html:4
+#: templates/base.html:50 templates/core/home.html:4
 msgid "Petites annonces à Kinshasa"
 msgstr "Classified ads in Kinshasa"
 
@@ -380,6 +423,28 @@ msgstr "See all ads"
 #: templates/core/home.html:32
 msgid "Aucune annonce pour le moment. Soyez le premier à publier !"
 msgstr "No ads yet. Be the first to post!"
+
+#: templates/messagerie/boite.html:22
+msgid "Aucune conversation pour le moment."
+msgstr "No conversations yet."
+
+#: templates/messagerie/conversation.html:7
+msgid "Tous mes messages"
+msgstr "All my messages"
+
+#: templates/messagerie/conversation.html:11
+msgid "avec"
+msgstr "with"
+
+#: templates/messagerie/conversation.html:27
+#, fuzzy
+#| msgid "Votre numéro de téléphone"
+msgid "Votre réponse"
+msgstr "Your phone number"
+
+#~ msgid ""
+#~ "Ce vendeur est joignable par la messagerie interne (bientôt disponible)."
+#~ msgstr "This seller can be reached through internal messaging (coming soon)."
 
 #~ msgid ""
 #~ "La plateforme de petites annonces de Kinshasa : immobilier, véhicules, "

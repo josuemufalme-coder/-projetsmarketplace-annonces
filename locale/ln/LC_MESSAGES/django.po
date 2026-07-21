@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 12:44+0100\n"
+"POT-Creation-Date: 2026-07-21 12:50+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: ln\n"
@@ -103,17 +103,41 @@ msgstr "Boyei malamu na Kongo Market !"
 msgid "Profil mis à jour."
 msgstr "Profil ebongisami."
 
-#: config/settings.py:107
+#: config/settings.py:109
 msgid "Français"
 msgstr "Falansé"
 
-#: config/settings.py:108
+#: config/settings.py:110
 msgid "Lingala"
 msgstr "Lingála"
 
-#: config/settings.py:109
+#: config/settings.py:111
 msgid "Anglais"
 msgstr "Lingelesi"
+
+#: messagerie/services.py:18
+#, python-format
+msgid "Nouveau message sur Kongo Market — %(annonce)s"
+msgstr "Message ya sika na Kongo Market — %(annonce)s"
+
+#: messagerie/services.py:21
+#, python-format
+msgid ""
+"%(expediteur)s vous a écrit au sujet de l'annonce « %(annonce)s ».\n"
+"\n"
+"%(texte)s\n"
+"\n"
+"Répondez ici : %(url)s"
+msgstr ""
+"%(expediteur)s akomeli yo mpo na annonce « %(annonce)s ».\n"
+"\n"
+"%(texte)s\n"
+"\n"
+"Yanola awa : %(url)s"
+
+#: messagerie/views.py:34
+msgid "Message envoyé au vendeur."
+msgstr "Message etindami na motekisi."
 
 #: templates/annonces/_carte.html:6
 msgid "Sans photo"
@@ -148,12 +172,31 @@ msgstr "Lakisa numero"
 msgid "Connectez-vous pour voir le numéro du vendeur."
 msgstr "Kota na konti mpo na komona numero ya motekisi."
 
-#: templates/annonces/detail.html:71
-msgid ""
-"Ce vendeur est joignable par la messagerie interne (bientôt disponible)."
-msgstr "Motekisi oyo azwamaka na messagerie ya kati (ekoya kala mingi te)."
+#: templates/annonces/detail.html:75
+msgid "Envoyer un message au vendeur"
+msgstr "Tinda message na motekisi"
 
-#: templates/annonces/detail.html:77
+#: templates/annonces/detail.html:76
+msgid "Bonjour, votre annonce m’intéresse…"
+msgstr "Mbote, annonce na yo esepelisi ngai…"
+
+#: templates/annonces/detail.html:78 templates/messagerie/conversation.html:30
+msgid "Envoyer"
+msgstr "Kotinda"
+
+#: templates/annonces/detail.html:81
+#, fuzzy
+#| msgid "Connectez-vous pour voir le numéro du vendeur."
+msgid "Connectez-vous pour contacter ce vendeur par la messagerie interne."
+msgstr "Kota na konti mpo na komona numero ya motekisi."
+
+#: templates/annonces/detail.html:82 templates/base.html:26
+#: templates/comptes/connexion.html:4 templates/comptes/connexion.html:8
+#: templates/comptes/inscription.html:18
+msgid "Connexion"
+msgstr "Kokota"
+
+#: templates/annonces/detail.html:89
 msgid "Gérer mes annonces"
 msgstr "Kobongisa ba annonces na ngai"
 
@@ -301,21 +344,21 @@ msgstr ""
 "Koteka mpe kosomba na Kinshasa : bandako, mituka, batelefone, misala mpe "
 "makambo mosusu."
 
-#: templates/base.html:22
+#: templates/base.html:19 templates/messagerie/boite.html:4
+#: templates/messagerie/boite.html:7 templates/messagerie/conversation.html:4
+msgid "Messages"
+msgstr "Ba messages"
+
+#: templates/base.html:23
 msgid "Déconnexion"
 msgstr "Kobima"
 
-#: templates/base.html:25 templates/comptes/connexion.html:4
-#: templates/comptes/connexion.html:8 templates/comptes/inscription.html:18
-msgid "Connexion"
-msgstr "Kokota"
-
-#: templates/base.html:26 templates/comptes/connexion.html:18
+#: templates/base.html:27 templates/comptes/connexion.html:18
 #: templates/comptes/inscription.html:4 templates/comptes/inscription.html:8
 msgid "Créer un compte"
 msgstr "Fungola konti"
 
-#: templates/base.html:49 templates/core/home.html:4
+#: templates/base.html:50 templates/core/home.html:4
 msgid "Petites annonces à Kinshasa"
 msgstr "Koteka mpe kosomba na Kinshasa"
 
@@ -384,6 +427,28 @@ msgstr "Tala ba annonces nyonso"
 #: templates/core/home.html:32
 msgid "Aucune annonce pour le moment. Soyez le premier à publier !"
 msgstr "Annonce ezali naino te. Zala moto ya liboso ya kotia !"
+
+#: templates/messagerie/boite.html:22
+msgid "Aucune conversation pour le moment."
+msgstr "Masolo ezali naino te."
+
+#: templates/messagerie/conversation.html:7
+msgid "Tous mes messages"
+msgstr "Ba messages na ngai nyonso"
+
+#: templates/messagerie/conversation.html:11
+msgid "avec"
+msgstr "na"
+
+#: templates/messagerie/conversation.html:27
+#, fuzzy
+#| msgid "Votre numéro de téléphone"
+msgid "Votre réponse"
+msgstr "Numero ya telefone na yo"
+
+#~ msgid ""
+#~ "Ce vendeur est joignable par la messagerie interne (bientôt disponible)."
+#~ msgstr "Motekisi oyo azwamaka na messagerie ya kati (ekoya kala mingi te)."
 
 #~ msgid ""
 #~ "La plateforme de petites annonces de Kinshasa : immobilier, véhicules, "

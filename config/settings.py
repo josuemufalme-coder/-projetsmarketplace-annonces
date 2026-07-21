@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "geo",
     "annonces",
     "comptes",
+    "messagerie",
 ]
 
 AUTH_USER_MODEL = "comptes.Utilisateur"
@@ -77,6 +78,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "messagerie.context_processors.messages_non_lus",
             ],
         },
     },
@@ -162,6 +164,22 @@ ANNONCE_RENOUVELLEMENT_JOURS = int(os.environ.get("ANNONCE_RENOUVELLEMENT_JOURS"
 ANNONCE_MAX_PHOTOS = int(os.environ.get("ANNONCE_MAX_PHOTOS", 6))
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# E-mails transactionnels (notifications de messagerie — décision Q5).
+# En local : affichage console. En production : SMTP (Brevo) via variables.
+EMAIL_BACKEND = os.environ.get(
+    "DJANGO_EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend"
+)
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "true").lower() == "true"
+DEFAULT_FROM_EMAIL = os.environ.get(
+    "DJANGO_DEFAULT_FROM_EMAIL", "Kongo Market <no-reply@localhost>"
+)
+# Adresse publique du site, utilisée dans les liens des e-mails.
+SITE_URL = os.environ.get("SITE_URL", "http://127.0.0.1:8000").rstrip("/")
 
 # Derrière le proxy Railway/Cloudflare, la requête d'origine est en HTTPS.
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

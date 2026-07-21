@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ fil.annonce.titre }} — {% translate "Messages" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<p><a href="{% url 'messagerie:boite' %}">‹ {% translate "Tous mes messages" %}</a></p>
+<div class="carte">
+  <p>
+    <a href="{{ fil.annonce.get_absolute_url }}"><strong>{{ fil.annonce.titre }}</strong></a>
+    · {% translate "avec" %} {{ interlocuteur.nom_affichage }}
+  </p>
+</div>
+
+<div class="fil-messages">
+  {% for message in fil.messages.all %}
+  <div class="bulle {% if message.expediteur == user %}moi{% else %}autre{% endif %}">
+    <p>{{ message.texte|linebreaksbr }}</p>
+    <span class="carte-meta">{{ message.date|date:"j b, H:i" }}</span>
+  </div>
+  {% endfor %}
+</div>
+
+<form method="post" class="carte">
+  {% csrf_token %}
+  <p>
+    <label for="id_texte">{% translate "Votre réponse" %}</label>
+    <textarea id="id_texte" name="texte" rows="3" required></textarea>
+  </p>
+  <button type="submit" class="btn btn-vert">{% translate "Envoyer" %}</button>
+</form>
+{% endblock %}
