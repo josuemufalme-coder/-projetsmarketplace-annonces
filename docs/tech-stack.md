@@ -1,7 +1,7 @@
 # Pile technique et hébergement — Kongo Market (MVP)
 
 **Version :** 1.0 — 21 juillet 2026
-**Statut :** Recommandation à valider par le fondateur
+**Statut :** Validé par le fondateur le 21 juillet 2026 — document de référence
 **Référence :** `docs/srs.md` v0.3
 
 ---

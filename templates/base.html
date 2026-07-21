@@ -1,0 +1,13 @@
+{% load i18n static %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Kongo Market{% endblock %}</title>
+  <meta name="description" content="{% translate 'Petites annonces à Kinshasa : immobilier, véhicules, téléphones, emploi et plus.' %}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  {% block content %}{% endblock %}
+</body>
+</html>

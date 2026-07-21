@@ -1,0 +1,47 @@
+# Traductions lingala de Kongo Market.
+# NOTE : traductions initiales à faire relire par un locuteur natif
+# avant le lancement public.
+msgid ""
+msgstr ""
+"Project-Id-Version: kongomarket\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-21 12:08+0100\n"
+"PO-Revision-Date: 2026-07-21 12:10+0100\n"
+"Language-Team: Kongo Market\n"
+"Language: ln\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: config/settings.py:99
+msgid "Français"
+msgstr "Falansé"
+
+#: config/settings.py:100
+msgid "Lingala"
+msgstr "Lingála"
+
+#: config/settings.py:101
+msgid "Anglais"
+msgstr "Lingelesi"
+
+#: templates/base.html:7
+msgid ""
+"Petites annonces à Kinshasa : immobilier, véhicules, téléphones, emploi et "
+"plus."
+msgstr ""
+"Koteka mpe kosomba na Kinshasa : bandako, mituka, batelefone, misala mpe "
+"makambo mosusu."
+
+#: templates/core/home.html:4 templates/core/home.html:47
+msgid "Bientôt disponible"
+msgstr "Ekomonana kala mingi te"
+
+#: templates/core/home.html:49
+msgid ""
+"La plateforme de petites annonces de Kinshasa : immobilier, véhicules, "
+"téléphones, emploi, services et plus — gratuite pour tous."
+msgstr ""
+"Esika ya koteka mpe kosomba na Kinshasa : bandako, mituka, batelefone, "
+"misala mpe makambo mosusu — ofele mpo na bato nyonso."
