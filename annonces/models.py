@@ -74,3 +74,137 @@ class ChampCategorie(ReferentielTraduisible):
         constraints = [
             models.UniqueConstraint(fields=["categorie", "code"], name="champ_code_unique_par_categorie"),
         ]
+
+
+class AnnonceQuerySet(models.QuerySet):
+    def actives(self):
+        """Annonces visibles publiquement : publiées et non expirées (30 jours, SRS §3.3)."""
+        from django.conf import settings as reglages
+        from django.utils import timezone
+        import datetime
+
+        limite = timezone.now() - datetime.timedelta(days=reglages.ANNONCE_DUREE_JOURS)
+        return self.filter(statut=Annonce.Statut.PUBLIEE, date_publication__gte=limite)
+
+
+class Annonce(models.Model):
+    """Annonce publiée par un vendeur — SRS §3.3, décisions Q4, Q8, Q9, Q10."""
+
+    class Devise(models.TextChoices):
+        USD = "USD", "$ (dollars américains)"
+        CDF = "CDF", "FC (francs congolais)"
+
+    class Contact(models.TextChoices):
+        TELEPHONE = "telephone", "Numéro affiché sur l'annonce"
+        MESSAGERIE = "messagerie", "Messagerie interne uniquement"
+
+    class Statut(models.TextChoices):
+        PUBLIEE = "publiee", "Publiée"
+        RETIREE = "retiree", "Retirée par le vendeur"
+        SUSPENDUE = "suspendue", "Suspendue par la modération"
+
+    vendeur = models.ForeignKey(
+        "comptes.Utilisateur", on_delete=models.CASCADE, related_name="annonces"
+    )
+    categorie = models.ForeignKey(Categorie, on_delete=models.PROTECT, related_name="annonces")
+    commune = models.ForeignKey("geo.Commune", on_delete=models.PROTECT, related_name="annonces")
+    titre = models.CharField("titre", max_length=120)
+    slug = models.SlugField(max_length=140, blank=True)
+    description = models.TextField("description")
+    # Prix facultatif (décision Q8) : soit montant + devise, soit « à discuter ».
+    prix = models.DecimalField("prix", max_digits=14, decimal_places=2, null=True, blank=True)
+    devise = models.CharField("devise", max_length=3, choices=Devise.choices, blank=True)
+    prix_a_discuter = models.BooleanField("prix à discuter", default=False)
+    contact = models.CharField(
+        "mode de contact", max_length=12, choices=Contact.choices, default=Contact.TELEPHONE
+    )
+    # Valeurs des champs spécifiques de la catégorie : {code: valeur}.
+    attributs = models.JSONField(default=dict, blank=True)
+    statut = models.CharField(max_length=12, choices=Statut.choices, default=Statut.PUBLIEE)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    # Date de publication ou de dernier renouvellement : sert au tri,
+    # à l'expiration (30 jours) et à la limite de renouvellement (Q10).
+    date_publication = models.DateTimeField(db_index=True)
+    # Réservé pour la future mise en avant payante (SRS §8) — inactif dans le MVP.
+    premium_jusqu_au = models.DateTimeField(null=True, blank=True, editable=False)
+
+    objects = AnnonceQuerySet.as_manager()
+
+    class Meta:
+        verbose_name = "annonce"
+        ordering = ["-date_publication"]
+
+    def __str__(self):
+        return self.titre
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("annonces:detail", kwargs={"pk": self.pk, "slug": self.slug or "annonce"})
+
+    @property
+    def expire_le(self):
+        import datetime
+
+        from django.conf import settings as reglages
+
+        return self.date_publication + datetime.timedelta(days=reglages.ANNONCE_DUREE_JOURS)
+
+    @property
+    def est_expiree(self):
+        from django.utils import timezone
+
+        return timezone.now() >= self.expire_le
+
+    @property
+    def peut_renouveler(self):
+        """Décision Q10 : au plus un renouvellement tous les 7 jours (configurable)."""
+        import datetime
+
+        from django.conf import settings as reglages
+        from django.utils import timezone
+
+        if self.statut != self.Statut.PUBLIEE:
+            return False
+        anciennete = timezone.now() - self.date_publication
+        return anciennete >= datetime.timedelta(days=reglages.ANNONCE_RENOUVELLEMENT_JOURS)
+
+    def champs_renseignes(self):
+        """Paires (définition de champ, valeur) pour l'affichage du détail."""
+        resultat = []
+        for champ in self.categorie.champs.filter(actif=True):
+            valeur = self.attributs.get(champ.code)
+            if valeur not in (None, ""):
+                resultat.append((champ, valeur))
+        return resultat
+
+
+class Photo(models.Model):
+    annonce = models.ForeignKey(Annonce, on_delete=models.CASCADE, related_name="photos")
+    image = models.ImageField(upload_to="annonces/%Y/%m/")
+    ordre = models.PositiveSmallIntegerField(default=1)
+
+    class Meta:
+        verbose_name = "photo"
+        ordering = ["ordre"]
+
+
+class ClicAffichageNumero(models.Model):
+    """Journal des clics « Afficher le numéro » — décisions Q1 et Q9.
+
+    Sert de preuve de contact pour le droit de laisser un avis, et de
+    statistique pour le vendeur.
+    """
+
+    annonce = models.ForeignKey(Annonce, on_delete=models.CASCADE, related_name="clics_numero")
+    utilisateur = models.ForeignKey(
+        "comptes.Utilisateur", on_delete=models.CASCADE, related_name="clics_numero"
+    )
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "clic « afficher le numéro »"
+        verbose_name_plural = "clics « afficher le numéro »"
+        constraints = [
+            models.UniqueConstraint(fields=["annonce", "utilisateur"], name="un_clic_par_annonce_et_utilisateur"),
+        ]

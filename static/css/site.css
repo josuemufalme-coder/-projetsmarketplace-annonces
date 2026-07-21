@@ -114,3 +114,75 @@ form ul { list-style-position: inside; font-size: 0.85rem; color: var(--gris); }
   color: var(--texte);
 }
 .puce-langue.active { background: var(--vert); border-color: var(--vert); color: #fff; font-weight: 700; }
+
+/* Accueil */
+.heros { text-align: center; padding: 1.5rem 0 2rem; }
+.heros h1 { font-size: 1.6rem; margin-bottom: 1rem; }
+.recherche { display: flex; gap: 0.5rem; max-width: 30rem; margin: 0 auto; }
+.recherche input { flex: 1; }
+.titre-section { font-size: 1.15rem; margin: 1.4rem 0 0.8rem; }
+
+/* Catégories */
+.grille-categories { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pastille-categorie {
+  background: #fff;
+  border: 1px solid var(--bord);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  font-size: 0.92rem;
+  color: var(--texte);
+}
+.pastille-categorie:hover { border-color: var(--vert); text-decoration: none; }
+
+/* Cartes d'annonces */
+.grille-annonces {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 0.8rem;
+}
+.carte-annonce {
+  background: #fff;
+  border: 1px solid var(--bord);
+  border-radius: 12px;
+  overflow: hidden;
+  color: var(--texte);
+  display: flex;
+  flex-direction: column;
+}
+.carte-annonce:hover { text-decoration: none; border-color: var(--vert); }
+.carte-photo { aspect-ratio: 4/3; background: #eceee9; display: flex; align-items: center; justify-content: center; }
+.carte-photo img { width: 100%; height: 100%; object-fit: cover; }
+.sans-photo { color: var(--gris); font-size: 0.85rem; }
+.carte-corps { padding: 0.6rem 0.7rem; }
+.carte-prix { font-weight: 700; color: var(--vert); }
+.carte-titre { font-size: 0.92rem; margin: 0.15rem 0; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.carte-meta { font-size: 0.8rem; color: var(--gris); }
+.vide { color: var(--gris); padding: 1rem 0; }
+
+/* Filtres et pagination */
+.filtres { display: grid; gap: 0.6rem; margin-bottom: 1.2rem; }
+.filtre-prix { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.4rem; }
+.pagination { display: flex; gap: 1rem; justify-content: center; margin: 1.5rem 0; }
+
+/* Détail d'annonce */
+.detail h1 { font-size: 1.35rem; margin: 0.6rem 0 0.3rem; }
+.detail-prix { font-size: 1.25rem; font-weight: 800; color: var(--vert); }
+.galerie { display: flex; gap: 0.5rem; overflow-x: auto; }
+.galerie img { height: 14rem; border-radius: 8px; object-fit: cover; max-width: 100%; }
+.table-champs { margin: 1rem 0; border-collapse: collapse; width: 100%; }
+.table-champs th, .table-champs td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--bord); font-size: 0.92rem; }
+.table-champs th { color: var(--gris); font-weight: 600; width: 40%; }
+.detail-description { margin: 1rem 0; line-height: 1.6; }
+.detail-vendeur { margin-top: 1rem; background: var(--fond); }
+.numero { font-size: 1.2rem; font-weight: 700; margin-top: 0.5rem; }
+.actions-vendeur { margin-top: 1rem; }
+
+/* Mes annonces */
+.ligne-annonce { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.7rem; flex-wrap: wrap; }
+.ligne-actions { display: flex; gap: 0.5rem; }
+.btn-gris { background: #e5e7e3; color: var(--texte); }
+
+@media (max-width: 480px) {
+  .grille-annonces { grid-template-columns: repeat(2, 1fr); }
+  .entete { justify-content: center; }
+}

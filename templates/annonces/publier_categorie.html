@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Publier une annonce" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Publier une annonce" %}</h1>
+  <p style="color:#667;margin-bottom:1rem;">{% translate "Choisissez d'abord la catégorie de votre annonce :" %}</p>
+  <div class="grille-categories">
+    {% for categorie in categories %}
+    <a class="pastille-categorie" href="{% url 'annonces:publier_categorie' categorie.slug %}">{{ categorie.nom }}</a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

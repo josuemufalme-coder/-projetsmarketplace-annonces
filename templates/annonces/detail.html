@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ annonce.titre }} — Kongo Market{% endblock %}
+
+{% block head %}
+<meta property="og:title" content="{{ annonce.titre }}">
+<meta property="og:description" content="{{ annonce.description|truncatechars:150 }}">
+{% with photo=annonce.photos.all|first %}{% if photo %}<meta property="og:image" content="{{ photo.image.url }}">{% endif %}{% endwith %}
+{% endblock %}
+
+{% block content %}
+<article class="carte detail">
+  {% if annonce.statut != "publiee" or annonce.est_expiree %}
+  <p class="message error">
+    {% if annonce.statut == "retiree" %}{% translate "Vous avez retiré cette annonce." %}
+    {% elif annonce.statut == "suspendue" %}{% translate "Cette annonce est suspendue par la modération." %}
+    {% else %}{% translate "Cette annonce a expiré." %}{% endif %}
+  </p>
+  {% endif %}
+
+  {% if annonce.photos.all %}
+  <div class="galerie">
+    {% for photo in annonce.photos.all %}
+    <img src="{{ photo.image.url }}" alt="{{ annonce.titre }} — photo {{ forloop.counter }}" {% if not forloop.first %}loading="lazy"{% endif %}>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <h1>{{ annonce.titre }}</h1>
+  <p class="detail-prix">
+    {% if annonce.prix_a_discuter %}{% translate "Prix à discuter" %}
+    {% elif annonce.devise == "USD" %}{{ annonce.prix|floatformat:"-2" }} $ US
+    {% elif annonce.devise == "CDF" %}{{ annonce.prix|floatformat:"-2" }} FC
+    {% endif %}
+  </p>
+  <p class="carte-meta">
+    {{ annonce.categorie.nom }} · {{ annonce.commune.nom }} ({{ annonce.commune.ville.nom }})
+    · {% blocktranslate with date=annonce.date_publication|date:"j F Y" %}publiée le {{ date }}{% endblocktranslate %}
+  </p>
+
+  {% with champs=annonce.champs_renseignes %}
+  {% if champs %}
+  <table class="table-champs">
+    {% for champ, valeur in champs %}
+    <tr><th>{{ champ.nom }}</th><td>{{ valeur }}{% if champ.unite %} {{ champ.unite }}{% endif %}</td></tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+  {% endwith %}
+
+  <p class="detail-description">{{ annonce.description|linebreaks }}</p>
+
+  <div class="detail-vendeur carte">
+    <p><strong>{{ annonce.vendeur.nom_affichage }}</strong>
+    {% if annonce.vendeur.commune %} · {{ annonce.vendeur.commune.nom }}{% endif %}</p>
+
+    {% if annonce.contact == "telephone" %}
+      {% if numero_visible %}
+      <p class="numero"><a href="tel:{{ annonce.vendeur.telephone }}">{{ annonce.vendeur.telephone }}</a></p>
+      {% else %}
+      <form method="post" action="{% url 'annonces:numero' annonce.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-vert">{% translate "Afficher le numéro" %}</button>
+      </form>
+      {% if not user.is_authenticated %}
+      <p class="carte-meta">{% translate "Connectez-vous pour voir le numéro du vendeur." %}</p>
+      {% endif %}
+      {% endif %}
+    {% else %}
+      <p class="carte-meta">{% translate "Ce vendeur est joignable par la messagerie interne (bientôt disponible)." %}</p>
+    {% endif %}
+  </div>
+
+  {% if est_vendeur %}
+  <div class="actions-vendeur">
+    <a href="{% url 'annonces:mes_annonces' %}">{% translate "Gérer mes annonces" %}</a>
+  </div>
+  {% endif %}
+</article>
+{% endblock %}

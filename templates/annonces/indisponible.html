@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Annonce indisponible" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Annonce indisponible" %}</h1>
+  <p>{% translate "Cette annonce a été retirée, a expiré ou n'existe pas." %}</p>
+  <p style="margin-top:1rem;"><a href="{% url 'annonces:liste' %}">{% translate "Voir les annonces en cours" %}</a></p>
+</div>
+{% endblock %}

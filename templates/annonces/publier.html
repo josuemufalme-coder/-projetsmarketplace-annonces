@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Publier une annonce" %} — {{ categorie.nom }} — Kongo Market{% endblock %}
+
+{% block content %}
+<div class="carte">
+  <h1>{% translate "Publier une annonce" %} — {{ categorie.nom }}</h1>
+  <p style="margin-bottom:1rem;"><a href="{% url 'annonces:publier' %}">‹ {% translate "Changer de catégorie" %}</a></p>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-vert">{% translate "Publier l'annonce" %}</button>
+  </form>
+</div>
+{% endblock %}

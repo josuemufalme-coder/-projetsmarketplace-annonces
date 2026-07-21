@@ -150,6 +150,17 @@ STORAGES = {
     },
 }
 
+# Fichiers envoyés par les utilisateurs (photos d'annonces).
+# En local : disque. En production : stockage objet S3/R2 (étape déploiement).
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+# Paramètres métier des annonces (SRS §3.3, décisions Q7 et Q10) —
+# configurables sans redéploiement via variables d'environnement.
+ANNONCE_DUREE_JOURS = int(os.environ.get("ANNONCE_DUREE_JOURS", 30))
+ANNONCE_RENOUVELLEMENT_JOURS = int(os.environ.get("ANNONCE_RENOUVELLEMENT_JOURS", 7))
+ANNONCE_MAX_PHOTOS = int(os.environ.get("ANNONCE_MAX_PHOTOS", 6))
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Derrière le proxy Railway/Cloudflare, la requête d'origine est en HTTPS.

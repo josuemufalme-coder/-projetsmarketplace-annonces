@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kongomarket\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 12:37+0100\n"
+"POT-Creation-Date: 2026-07-21 12:44+0100\n"
 "PO-Revision-Date: 2026-07-21 12:10+0100\n"
 "Language-Team: Kongo Market\n"
 "Language: en\n"
@@ -11,6 +11,65 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: annonces/forms.py:38
+msgid "Votre numéro de téléphone"
+msgstr "Your phone number"
+
+#: annonces/forms.py:41
+#, fuzzy
+#| msgid ""
+#| "Affiché sur vos annonces uniquement si vous choisissez le mode « numéro "
+#| "affiché »."
+msgid "Obligatoire si vous choisissez « Numéro affiché sur l'annonce »."
+msgstr "Shown on your ads only if you choose the “displayed number” mode."
+
+#: annonces/forms.py:43
+msgid "Photos"
+msgstr "Photos"
+
+#: annonces/forms.py:60
+#, python-format
+msgid "Jusqu'à %(max)s photos."
+msgstr "Up to %(max)s photos."
+
+#: annonces/forms.py:64
+#, python-format
+msgid "Au moins une photo est requise. Jusqu'à %(max)s photos."
+msgstr "At least one photo is required. Up to %(max)s photos."
+
+#: annonces/forms.py:87
+#, python-format
+msgid "Vous pouvez joindre au maximum %(max)s photos."
+msgstr "You can attach at most %(max)s photos."
+
+#: annonces/forms.py:101
+msgid "Indiquez un prix et sa devise, ou cochez « Prix à discuter »."
+msgstr "Enter a price and its currency, or tick “Price negotiable”."
+
+#: annonces/forms.py:106
+msgid "Renseignez votre numéro ou choisissez la messagerie interne."
+msgstr "Enter your phone number or choose internal messaging."
+
+#: annonces/forms.py:110
+msgid "Ajoutez au moins une photo pour cette catégorie."
+msgstr "Add at least one photo for this category."
+
+#: annonces/views.py:127
+msgid "Votre annonce est publiée !"
+msgstr "Your ad is now live!"
+
+#: annonces/views.py:150
+msgid "Annonce renouvelée : elle repart en tête pour 30 jours."
+msgstr "Ad renewed: it goes back to the top for 30 days."
+
+#: annonces/views.py:152
+msgid "Cette annonce ne peut pas encore être renouvelée."
+msgstr "This ad cannot be renewed yet."
+
+#: annonces/views.py:162
+msgid "Annonce retirée."
+msgstr "Ad removed."
 
 #: comptes/models.py:45
 msgid "adresse e-mail"
@@ -54,6 +113,184 @@ msgstr "Lingala"
 msgid "Anglais"
 msgstr "English"
 
+#: templates/annonces/_carte.html:6
+msgid "Sans photo"
+msgstr "No photo"
+
+#: templates/annonces/_carte.html:11 templates/annonces/detail.html:32
+msgid "Prix à discuter"
+msgstr "Price negotiable"
+
+#: templates/annonces/detail.html:16
+msgid "Vous avez retiré cette annonce."
+msgstr "You removed this ad."
+
+#: templates/annonces/detail.html:17
+msgid "Cette annonce est suspendue par la modération."
+msgstr "This ad has been suspended by moderation."
+
+#: templates/annonces/detail.html:18
+msgid "Cette annonce a expiré."
+msgstr "This ad has expired."
+
+#: templates/annonces/detail.html:39
+#, python-format
+msgid "publiée le %(date)s"
+msgstr "posted on %(date)s"
+
+#: templates/annonces/detail.html:64
+msgid "Afficher le numéro"
+msgstr "Show phone number"
+
+#: templates/annonces/detail.html:67
+msgid "Connectez-vous pour voir le numéro du vendeur."
+msgstr "Log in to see the seller's phone number."
+
+#: templates/annonces/detail.html:71
+msgid ""
+"Ce vendeur est joignable par la messagerie interne (bientôt disponible)."
+msgstr "This seller can be reached through internal messaging (coming soon)."
+
+#: templates/annonces/detail.html:77
+msgid "Gérer mes annonces"
+msgstr "Manage my ads"
+
+#: templates/annonces/indisponible.html:4
+#: templates/annonces/indisponible.html:8
+#, fuzzy
+#| msgid "Bientôt disponible"
+msgid "Annonce indisponible"
+msgstr "Coming soon"
+
+#: templates/annonces/indisponible.html:9
+msgid "Cette annonce a été retirée, a expiré ou n'existe pas."
+msgstr "This ad was removed, has expired or does not exist."
+
+#: templates/annonces/indisponible.html:10
+msgid "Voir les annonces en cours"
+msgstr "See current ads"
+
+#: templates/annonces/liste.html:4
+msgid "Annonces"
+msgstr "Ads"
+
+#: templates/annonces/liste.html:8
+msgid "Toutes les annonces"
+msgstr "All ads"
+
+#: templates/annonces/liste.html:12
+msgid "Mots-clés…"
+msgstr "Keywords…"
+
+#: templates/annonces/liste.html:14
+msgid "Toutes les catégories"
+msgstr "All categories"
+
+#: templates/annonces/liste.html:20
+msgid "Toutes les communes"
+msgstr "All communes"
+
+#: templates/annonces/liste.html:26
+msgid "Devise"
+msgstr "Currency"
+
+#: templates/annonces/liste.html:27
+msgid "Prix : toutes devises"
+msgstr "Price: any currency"
+
+#: templates/annonces/liste.html:31
+msgid "Min"
+msgstr "Min"
+
+#: templates/annonces/liste.html:32
+msgid "Max"
+msgstr "Max"
+
+#: templates/annonces/liste.html:34
+msgid "Trier"
+msgstr "Sort"
+
+#: templates/annonces/liste.html:35
+msgid "Plus récentes d'abord"
+msgstr "Newest first"
+
+#: templates/annonces/liste.html:36
+msgid "Prix croissant"
+msgstr "Price: low to high"
+
+#: templates/annonces/liste.html:37
+msgid "Prix décroissant"
+msgstr "Price: high to low"
+
+#: templates/annonces/liste.html:39
+msgid "Filtrer"
+msgstr "Filter"
+
+#: templates/annonces/liste.html:47
+msgid "Précédent"
+msgstr "Previous"
+
+#: templates/annonces/liste.html:49
+msgid "Suivant"
+msgstr "Next"
+
+#: templates/annonces/liste.html:52
+msgid "Aucune annonce ne correspond à votre recherche."
+msgstr "No ads match your search."
+
+#: templates/annonces/mes_annonces.html:4
+#: templates/annonces/mes_annonces.html:7 templates/base.html:18
+msgid "Mes annonces"
+msgstr "My ads"
+
+#: templates/annonces/mes_annonces.html:16
+msgid "Expirée"
+msgstr "Expired"
+
+#: templates/annonces/mes_annonces.html:17
+#, python-format
+msgid "En ligne — expire le %(date)s"
+msgstr "Online — expires on %(date)s"
+
+#: templates/annonces/mes_annonces.html:18
+msgid "Retirée"
+msgstr "Removed"
+
+#: templates/annonces/mes_annonces.html:19
+msgid "Suspendue par la modération"
+msgstr "Suspended by moderation"
+
+#: templates/annonces/mes_annonces.html:25
+msgid "Renouveler"
+msgstr "Renew"
+
+#: templates/annonces/mes_annonces.html:30
+msgid "Retirer"
+msgstr "Remove"
+
+#: templates/annonces/mes_annonces.html:38
+msgid "Vous n'avez pas encore d'annonce."
+msgstr "You have no ads yet."
+
+#: templates/annonces/mes_annonces.html:39 templates/annonces/publier.html:4
+#: templates/annonces/publier.html:8
+#: templates/annonces/publier_categorie.html:4
+#: templates/annonces/publier_categorie.html:8 templates/base.html:16
+msgid "Publier une annonce"
+msgstr "Post an ad"
+
+#: templates/annonces/publier.html:9
+msgid "Changer de catégorie"
+msgstr "Change category"
+
+#: templates/annonces/publier.html:13
+msgid "Publier l'annonce"
+msgstr "Post the ad"
+
+#: templates/annonces/publier_categorie.html:9
+msgid "Choisissez d'abord la catégorie de votre annonce :"
+msgstr "First, choose a category for your ad:"
+
 #: templates/base.html:7
 msgid ""
 "Petites annonces à Kinshasa : immobilier, véhicules, téléphones, emploi et "
@@ -61,21 +298,21 @@ msgid ""
 msgstr ""
 "Classified ads in Kinshasa: real estate, vehicles, phones, jobs and more."
 
-#: templates/base.html:20
+#: templates/base.html:22
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:23 templates/comptes/connexion.html:4
+#: templates/base.html:25 templates/comptes/connexion.html:4
 #: templates/comptes/connexion.html:8 templates/comptes/inscription.html:18
 msgid "Connexion"
 msgstr "Log in"
 
-#: templates/base.html:24 templates/comptes/connexion.html:18
+#: templates/base.html:26 templates/comptes/connexion.html:18
 #: templates/comptes/inscription.html:4 templates/comptes/inscription.html:8
 msgid "Créer un compte"
 msgstr "Create an account"
 
-#: templates/base.html:47
+#: templates/base.html:49 templates/core/home.html:4
 msgid "Petites annonces à Kinshasa"
 msgstr "Classified ads in Kinshasa"
 
@@ -114,14 +351,39 @@ msgstr "My profile"
 msgid "Enregistrer"
 msgstr "Save"
 
-#: templates/core/home.html:4 templates/core/home.html:36
-msgid "Bientôt disponible"
-msgstr "Coming soon"
+#: templates/core/home.html:8
+#, fuzzy
+#| msgid "Petites annonces à Kinshasa"
+msgid "Achetez et vendez à Kinshasa"
+msgstr "Classified ads in Kinshasa"
 
-#: templates/core/home.html:38
-msgid ""
-"La plateforme de petites annonces de Kinshasa : immobilier, véhicules, "
-"téléphones, emploi, services et plus — gratuite pour tous."
-msgstr ""
-"Kinshasa's classified ads platform: real estate, vehicles, phones, jobs, "
-"services and more — free for everyone."
+#: templates/core/home.html:10
+msgid "Que cherchez-vous ?"
+msgstr "What are you looking for?"
+
+#: templates/core/home.html:10 templates/core/home.html:11
+msgid "Rechercher"
+msgstr "Search"
+
+#: templates/core/home.html:16
+msgid "Catégories"
+msgstr "Categories"
+
+#: templates/core/home.html:25
+msgid "Annonces récentes"
+msgstr "Recent ads"
+
+#: templates/core/home.html:30
+msgid "Voir toutes les annonces"
+msgstr "See all ads"
+
+#: templates/core/home.html:32
+msgid "Aucune annonce pour le moment. Soyez le premier à publier !"
+msgstr "No ads yet. Be the first to post!"
+
+#~ msgid ""
+#~ "La plateforme de petites annonces de Kinshasa : immobilier, véhicules, "
+#~ "téléphones, emploi, services et plus — gratuite pour tous."
+#~ msgstr ""
+#~ "Kinshasa's classified ads platform: real estate, vehicles, phones, jobs, "
+#~ "services and more — free for everyone."

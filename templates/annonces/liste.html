@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% if categorie_active %}{{ categorie_active.nom }}{% else %}{% translate "Annonces" %}{% endif %} — Kongo Market{% endblock %}
+
+{% block content %}
+<h1 class="titre-section">
+  {% if categorie_active %}{{ categorie_active.nom }}{% else %}{% translate "Toutes les annonces" %}{% endif %}
+</h1>
+
+<form method="get" class="filtres carte">
+  <input type="search" name="q" value="{{ q }}" placeholder="{% translate 'Mots-clés…' %}">
+  <select name="categorie">
+    <option value="">{% translate "Toutes les catégories" %}</option>
+    {% for categorie in categories %}
+    <option value="{{ categorie.slug }}" {% if categorie_active.slug == categorie.slug %}selected{% endif %}>{{ categorie.nom }}</option>
+    {% endfor %}
+  </select>
+  <select name="commune">
+    <option value="">{% translate "Toutes les communes" %}</option>
+    {% for commune in communes %}
+    <option value="{{ commune.slug }}" {% if slug_commune == commune.slug %}selected{% endif %}>{{ commune.nom }}</option>
+    {% endfor %}
+  </select>
+  <div class="filtre-prix">
+    <select name="devise" aria-label="{% translate 'Devise' %}">
+      <option value="">{% translate "Prix : toutes devises" %}</option>
+      <option value="USD" {% if devise == "USD" %}selected{% endif %}>USD ($)</option>
+      <option value="CDF" {% if devise == "CDF" %}selected{% endif %}>CDF (FC)</option>
+    </select>
+    <input type="number" name="prix_min" value="{{ prix_min }}" placeholder="{% translate 'Min' %}" min="0">
+    <input type="number" name="prix_max" value="{{ prix_max }}" placeholder="{% translate 'Max' %}" min="0">
+  </div>
+  <select name="tri" aria-label="{% translate 'Trier' %}">
+    <option value="">{% translate "Plus récentes d'abord" %}</option>
+    <option value="prix" {% if tri == "prix" %}selected{% endif %}>{% translate "Prix croissant" %}</option>
+    <option value="-prix" {% if tri == "-prix" %}selected{% endif %}>{% translate "Prix décroissant" %}</option>
+  </select>
+  <button type="submit" class="btn btn-vert">{% translate "Filtrer" %}</button>
+</form>
+
+{% if page.object_list %}
+<div class="grille-annonces">
+  {% for annonce in page.object_list %}{% include "annonces/_carte.html" %}{% endfor %}
+</div>
+<nav class="pagination">
+  {% if page.has_previous %}<a href="?{{ request.GET.urlencode }}&page={{ page.previous_page_number }}">‹ {% translate "Précédent" %}</a>{% endif %}
+  <span>{{ page.number }} / {{ page.paginator.num_pages }}</span>
+  {% if page.has_next %}<a href="?{{ request.GET.urlencode }}&page={{ page.next_page_number }}">{% translate "Suivant" %} ›</a>{% endif %}
+</nav>
+{% else %}
+<p class="vide">{% translate "Aucune annonce ne correspond à votre recherche." %}</p>
+{% endif %}
+{% endblock %}

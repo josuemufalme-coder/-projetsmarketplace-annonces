@@ -1,54 +1,35 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}Kongo Market — {% translate "Bientôt disponible" %}{% endblock %}
+{% block title %}Kongo Market — {% translate "Petites annonces à Kinshasa" %}{% endblock %}
 
-{% block head %}
-<style>
-  body { background: #0b3d2e; color: #fdfdfb; }
-  .accueil {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-  }
-  .accueil-carte { max-width: 34rem; text-align: center; }
-  .accueil-logo {
-    font-size: 2.4rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.75rem;
-  }
-  .accueil-logo .accent { color: #f5c518; }
-  .accueil h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: 1rem; }
-  .accueil p { line-height: 1.6; color: #d9e5df; margin-bottom: 2rem; }
-  .accueil .langs { display: flex; gap: 0.5rem; justify-content: center; }
-  .accueil .puce-langue { border-color: #4d7a68; color: #fdfdfb; }
-  .accueil .puce-langue.active { background: #f5c518; border-color: #f5c518; color: #0b3d2e; }
-</style>
-{% endblock %}
+{% block content %}
+<section class="heros">
+  <h1>{% translate "Achetez et vendez à Kinshasa" %}</h1>
+  <form method="get" action="{% url 'annonces:liste' %}" class="recherche">
+    <input type="search" name="q" placeholder="{% translate 'Que cherchez-vous ?' %}" aria-label="{% translate 'Rechercher' %}">
+    <button type="submit" class="btn btn-jaune">{% translate "Rechercher" %}</button>
+  </form>
+</section>
 
-{% block body %}
-<div class="accueil">
-  <main class="accueil-carte">
-    <div class="accueil-logo">Kongo<span class="accent">Market</span></div>
-    <h1>{% translate "Bientôt disponible" %}</h1>
-    <p>
-      {% translate "La plateforme de petites annonces de Kinshasa : immobilier, véhicules, téléphones, emploi, services et plus — gratuite pour tous." %}
-    </p>
-    <div class="langs">
-      {% get_current_language as CURRENT_LANG %}
-      {% for code, name in LANGUAGES %}
-      <form action="{% url 'set_language' %}" method="post" class="inline">
-        {% csrf_token %}
-        <input type="hidden" name="language" value="{{ code }}">
-        <button type="submit" class="puce-langue {% if code == CURRENT_LANG %}active{% endif %}" lang="{{ code }}">
-          {{ code|upper }}
-        </button>
-      </form>
-      {% endfor %}
-    </div>
-  </main>
-</div>
+<section>
+  <h2 class="titre-section">{% translate "Catégories" %}</h2>
+  <div class="grille-categories">
+    {% for categorie in categories %}
+    <a class="pastille-categorie" href="{% url 'annonces:liste' %}?categorie={{ categorie.slug }}">{{ categorie.nom }}</a>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h2 class="titre-section">{% translate "Annonces récentes" %}</h2>
+  {% if recentes %}
+  <div class="grille-annonces">
+    {% for annonce in recentes %}{% include "annonces/_carte.html" %}{% endfor %}
+  </div>
+  <p style="margin-top:1rem;"><a href="{% url 'annonces:liste' %}">{% translate "Voir toutes les annonces" %}</a></p>
+  {% else %}
+  <p class="vide">{% translate "Aucune annonce pour le moment. Soyez le premier à publier !" %}</p>
+  {% endif %}
+</section>
 {% endblock %}

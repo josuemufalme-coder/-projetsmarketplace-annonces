@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Mes annonces" %} — Kongo Market{% endblock %}
+
+{% block content %}
+<h1 class="titre-section">{% translate "Mes annonces" %}</h1>
+{% if annonces %}
+<div class="liste-mes-annonces">
+  {% for annonce in annonces %}
+  <div class="carte ligne-annonce">
+    <div>
+      <a href="{{ annonce.get_absolute_url }}"><strong>{{ annonce.titre }}</strong></a>
+      <p class="carte-meta">
+        {% if annonce.statut == "publiee" %}
+          {% if annonce.est_expiree %}{% translate "Expirée" %}
+          {% else %}{% blocktranslate with date=annonce.expire_le|date:"j F" %}En ligne — expire le {{ date }}{% endblocktranslate %}{% endif %}
+        {% elif annonce.statut == "retiree" %}{% translate "Retirée" %}
+        {% else %}{% translate "Suspendue par la modération" %}{% endif %}
+      </p>
+    </div>
+    <div class="ligne-actions">
+      {% if annonce.peut_renouveler %}
+      <form method="post" action="{% url 'annonces:renouveler' annonce.pk %}">
+        {% csrf_token %}<button type="submit" class="btn btn-jaune">{% translate "Renouveler" %}</button>
+      </form>
+      {% endif %}
+      {% if annonce.statut == "publiee" %}
+      <form method="post" action="{% url 'annonces:retirer' annonce.pk %}">
+        {% csrf_token %}<button type="submit" class="btn btn-gris">{% translate "Retirer" %}</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p class="vide">{% translate "Vous n'avez pas encore d'annonce." %}</p>
+<p><a class="btn btn-vert" href="{% url 'annonces:publier' %}">{% translate "Publier une annonce" %}</a></p>
+{% endif %}
+{% endblock %}
